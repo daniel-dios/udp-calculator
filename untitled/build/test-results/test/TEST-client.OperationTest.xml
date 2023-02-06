@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="client.OperationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-02-06T16:57:13" hostname="ip-10-104-198-102.eu-central-1.compute.internal" time="0.001">
+  <properties/>
+  <testcase name="shouldReturnOperation()" classname="client.OperationTest" time="0.0"/>
+  <testcase name="shouldReturnEmptyWhenOperationIsNotValid()" classname="client.OperationTest" time="0.0"/>
+  <system-out><![CDATA[Operation is invalid.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

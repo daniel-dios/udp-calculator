@@ -1,52 +1,20 @@
-IP is not valid.
-Port is not valid.
-Numb is invalid.
 Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
+ IP is not valid format X.X.X.X.
 Numb is invalid.
-Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
 Numb is invalid.
-Operation is invalid.
 Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
+Numb is out of [0, 255] range.
 Arguments are not 5.
 Arguments are not 5.
-IP is not valid.
-Port is not valid.
 Numb is invalid.
-Operation is invalid.
 Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
-IP is not valid.
-Port is not valid.
-Numb is invalid.
-Operation is invalid.
-Numb is invalid.
+Numb is out of [0, 255] range.
+
+	 IP is not valid format X.X.X.X.
+Numb is invalid.
+Numb is out of [0, 255] range.
+Numb is out of [0, 255] range.
+Operation is invalid.
+Numb is invalid.
+Numb is out of [0, 255] range.
+Numb is out of [0, 255] range.

@@ -10,8 +10,16 @@ public class Numb {
     }
 
     public static Optional<Numb> parse(final String arg) {
-        System.out.println("Numb is invalid.");
-
-        return Optional.empty();
+        try {
+            final int number = Integer.parseInt(arg);
+            if (number < 0 || number > 255) {
+                System.out.println("Numb is out of [0, 255] range.");
+                return Optional.empty();
+            }
+            return Optional.of(new Numb(number));
+        } catch (NumberFormatException e) {
+            System.out.println("Numb is invalid.");
+            return Optional.empty();
+        }
     }
 }

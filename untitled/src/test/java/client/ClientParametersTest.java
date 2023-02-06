@@ -1,5 +1,7 @@
 package client;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -44,19 +46,21 @@ public class ClientParametersTest {
     }
 
     @Test
-    void shouldReturnValid() {
+    void shouldReturnValid() throws UnknownHostException {
         String[] input = new String[]{"192.168.1.9", "9000", "4", "+", "5"};
 
         final Optional<ClientParameters> parse = ClientParameters.parse(input);
 
         final ClientParameters expected = new ClientParameters(
-                new IP("192.168.1.9"),
+                new IP(InetAddress.getByName("192.168.1.9")),
                 new Port(9000),
                 new Numb(4),
                 Operation.SUM,
                 new Numb(5)
         );
         assertThat(parse)
+                .isNotEmpty()
+                .get()
                 .usingRecursiveComparison()
                 .isEqualTo(expected);
     }

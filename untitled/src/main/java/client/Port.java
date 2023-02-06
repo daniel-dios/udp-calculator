@@ -10,8 +10,16 @@ public class Port {
     }
 
     public static Optional<Port> parse(final String arg) {
-        System.out.println("Port is not valid.");
-
-        return Optional.empty();
+        try {
+            final int port = Integer.parseInt(arg);
+            if (port < 0 || port > 65535) {
+                System.out.println("Numb is out of [0, 255] range.");
+                return Optional.empty();
+            }
+            return Optional.of(new Port(port));
+        } catch (NumberFormatException e) {
+            System.out.println("Numb is invalid.");
+            return Optional.empty();
+        }
     }
 }
