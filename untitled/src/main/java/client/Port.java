@@ -22,4 +22,8 @@ public class Port {
             return Optional.empty();
         }
     }
+
+    public int getValue() {
+        return this.val;
+    }
 }

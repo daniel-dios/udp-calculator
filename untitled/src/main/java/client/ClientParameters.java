@@ -1,5 +1,6 @@
 package client;
 
+import java.net.InetAddress;
 import java.util.Optional;
 
 public class ClientParameters {
@@ -45,5 +46,17 @@ public class ClientParameters {
 
     private static boolean checkDiv(final Operation operation, final Numb numb) {
         return operation.equals(Operation.DIV) && numb.isZero();
+    }
+
+    public byte[] toRequest() {
+        return new byte[0];
+    }
+
+    public InetAddress address() {
+        return this.ip.getValue();
+    }
+
+    public int port() {
+        return this.port.getValue();
     }
 }

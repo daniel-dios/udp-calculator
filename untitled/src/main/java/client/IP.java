@@ -23,4 +23,8 @@ public class IP {
             return Optional.empty();
         }
     }
+
+    public InetAddress getValue() {
+        return this.val;
+    }
 }
