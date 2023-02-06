@@ -35,7 +35,3 @@ hs_err_pid*
 /dataSources.local.xml
 # Zeppelin ignored files
 /ZeppelinRemoteNotebooks/
-
-/untitled
-/untitled/*
-/untitled/
