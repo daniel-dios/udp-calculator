@@ -14,7 +14,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,17 +43,28 @@ public class ClientTest {
                 .contains("0x255");
     }
 
-    @Test
-    void shouldReceiveMessages() throws UnknownHostException {
+    public static Stream<Arguments> calculateMinAndMax() {
+        return Stream.of(
+                Arguments.of(String.valueOf(255 * 255 + 255)),
+                Arguments.of(String.valueOf(255 * 255 + 254)),
+                Arguments.of(String.valueOf(1)),
+                Arguments.of(String.valueOf(0)),
+                Arguments.of(String.valueOf(-255))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("calculateMinAndMax")
+    void shouldReceiveMessages(String input) throws UnknownHostException {
         final int port = new Random().nextInt(1000) + 8000;
         final ClientParameters x = buildRequest(port, "0", "x", "255");
 
         Executors.newFixedThreadPool(1)
-                .submit(() -> send(port, "65280"));
+                .submit(() -> send(port, input));
 
-        final Optional<BigInteger> bigInteger = Client.sendRequest(x);
+        final Optional<String> actual = Client.sendRequest(x);
 
-        assertThat(bigInteger).isPresent().get().isEqualTo(BigInteger.valueOf(65280));
+        assertThat(actual).isPresent().get().isEqualTo(input);
     }
 
     private String send(final int port, final String s) {
@@ -56,21 +72,21 @@ public class ClientTest {
             System.out.println("Listening...");
 
             final byte[] receiveData = new byte[7];
-            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            final DatagramPacket dp = new DatagramPacket(receiveData, receiveData.length);
 
-            serverSocket.receive(receivePacket);
+            serverSocket.receive(dp);
 
-            System.out.println("[UDP " + receivePacket.getAddress() + "]");
+            System.out.println("[UDP " + dp.getAddress() + "]");
 
             DatagramPacket sendPacket = new DatagramPacket(
                     s.getBytes(),
-                    "65280".getBytes().length,
-                    receivePacket.getAddress(),
-                    receivePacket.getPort()
+                    s.getBytes().length,
+                    dp.getAddress(),
+                    dp.getPort()
             );
             serverSocket.send(sendPacket);
 
-            return new String(receivePacket.getData());
+            return new String(dp.getData());
         } catch (IOException e) {
             System.out.println("IO ERROR");
             return "error";
@@ -99,21 +115,21 @@ public class ClientTest {
             System.out.println("Listening...");
 
             final byte[] receiveData = new byte[7];
-            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            final DatagramPacket dp = new DatagramPacket(receiveData, receiveData.length);
 
-            serverSocket.receive(receivePacket);
+            serverSocket.receive(dp);
 
-            System.out.println("[UDP " + receivePacket.getAddress() + "]");
+            System.out.println("[UDP " + dp.getAddress() + "]");
 
             DatagramPacket sendPacket = new DatagramPacket(
                     BigInteger.valueOf(1).toByteArray(),
                     BigInteger.valueOf(1).toByteArray().length,
-                    receivePacket.getAddress(),
-                    receivePacket.getPort()
+                    dp.getAddress(),
+                    dp.getPort()
             );
             serverSocket.send(sendPacket);
 
-            return new String(receivePacket.getData());
+            return new String(dp.getData());
         } catch (IOException e) {
             System.out.println("IO ERROR");
             return "error";

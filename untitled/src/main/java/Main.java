@@ -15,7 +15,7 @@ public class Main {
             return;
         }
 
-        final Optional<BigInteger> bytes = Client.sendRequest(maybeParams.get());
+        final Optional<String> bytes = Client.sendRequest(maybeParams.get());
 
         if (bytes.isPresent()) {
             System.out.println("El valor recibido es: " + bytes.get());

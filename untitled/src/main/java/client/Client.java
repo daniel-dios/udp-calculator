@@ -1,7 +1,6 @@
 package client;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.PortUnreachableException;
@@ -11,7 +10,7 @@ import java.util.Optional;
 
 public class Client {
 
-    public static Optional<BigInteger> sendRequest(ClientParameters params) {
+    public static Optional<String> sendRequest(ClientParameters params) {
         try (DatagramSocket ds = new DatagramSocket()) {
             ds.setSoTimeout(10000);
             final byte[] send = params.toRequest();
@@ -19,10 +18,9 @@ public class Client {
 
             ds.send(datagramPacket);
 
-            final byte[] receiveData = new byte[BigInteger.valueOf(65280).toByteArray().length];
-            final DatagramPacket received = new DatagramPacket(receiveData, receiveData.length);
+            final DatagramPacket received = new DatagramPacket(new byte[5], 5); // -255 to 65280 are 5 characters as max.
             ds.receive(received);
-            return Optional.of(new BigInteger(received.getData()));
+            return Optional.of(new String(received.getData()).trim());
         } catch (SecurityException e) {
             System.out.println(" – if a security manager exists and its checkMulticast or checkConnect method doesn't allow the send.");
             return Optional.empty();
