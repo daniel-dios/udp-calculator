@@ -64,4 +64,11 @@ public class ClientParametersTest {
                 .usingRecursiveComparison()
                 .isEqualTo(expected);
     }
+
+    @Test
+    void shouldReturnEmptyWhenDivAndSecondNumbIsZero() {
+        String[] input = new String[]{"192.168.1.9", "9000", "4", "-", "0"};
+
+        assertThat(ClientParameters.parse(input)).isEmpty();
+    }
 }

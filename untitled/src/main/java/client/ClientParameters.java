@@ -17,7 +17,6 @@ public class ClientParameters {
             final Operation operation,
             final Numb secondNumb
     ) {
-
         this.ip = ip;
         this.port = port;
         this.firstNumb = firstNumb;
@@ -35,12 +34,16 @@ public class ClientParameters {
         final Optional<Port> port = Port.parse(args[1]);
         final Optional<Numb> firstNumb = Numb.parse(args[2]);
         final Optional<Operation> operation = Operation.parse(args[3]);
-        final Optional<Numb> numb = Numb.parse(args[4]);
+        final Optional<Numb> secondNumb = Numb.parse(args[4]);
 
-        if (ip.isPresent() && port.isPresent() && firstNumb.isPresent() && operation.isPresent() && numb.isPresent()) {
-            return Optional.of(new ClientParameters(ip.get(), port.get(), firstNumb.get(), operation.get(), numb.get()));
+        if (ip.isPresent() && port.isPresent() && firstNumb.isPresent() && operation.isPresent() && secondNumb.isPresent() && checkDiv(operation.get(), secondNumb.get())) {
+            return Optional.of(new ClientParameters(ip.get(), port.get(), firstNumb.get(), operation.get(), secondNumb.get()));
         }
 
         return Optional.empty();
+    }
+
+    private static boolean checkDiv(final Operation operation, final Numb numb) {
+        return operation.equals(Operation.DIV) && numb.isZero();
     }
 }

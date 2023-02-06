@@ -22,4 +22,8 @@ public class Numb {
             return Optional.empty();
         }
     }
+
+    public boolean isZero() {
+        return val == 0;
+    }
 }

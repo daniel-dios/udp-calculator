@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="client.ClientParametersTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-02-06T16:57:13" hostname="ip-10-104-198-102.eu-central-1.compute.internal" time="0.052">
+<testsuite name="client.ClientParametersTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-06T17:01:40" hostname="ip-10-104-198-102.eu-central-1.compute.internal" time="0.031">
   <properties/>
-  <testcase name="shouldReturnEmptyWhenSymbolIsNotValid()" classname="client.ClientParametersTest" time="0.032"/>
-  <testcase name="shouldReturnEmptyWhenIpIsNotValid()" classname="client.ClientParametersTest" time="0.001"/>
-  <testcase name="shouldReturnValid()" classname="client.ClientParametersTest" time="0.014"/>
-  <testcase name="shouldReturnEmptyWhenPortIsNotValid()" classname="client.ClientParametersTest" time="0.001"/>
-  <testcase name="shouldReturnEmptyWhenFirstNumberIsNotValid()" classname="client.ClientParametersTest" time="0.001"/>
-  <testcase name="shouldReturnEmptyWhenErrors()" classname="client.ClientParametersTest" time="0.001"/>
-  <testcase name="shouldReturnEmptyWhenSecondNumberIsNotValid()" classname="client.ClientParametersTest" time="0.001"/>
-  <system-out><![CDATA[Operation is invalid.
-IP is not valid format X.X.X.X.
-Numb is invalid.
-Numb is invalid.
-Numb is invalid.
-Numb is out of [0, 255] range.
-Arguments are not 5.
-Arguments are not 5.
-Numb is invalid.
-Numb is invalid.
-Numb is out of [0, 255] range.
-]]></system-out>
+  <testcase name="shouldReturnEmptyWhenDivAndSecondNumbIsZero()" classname="client.ClientParametersTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
