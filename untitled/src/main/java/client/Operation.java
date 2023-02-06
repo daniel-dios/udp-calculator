@@ -22,4 +22,18 @@ public enum Operation {
         System.out.println("Operation is invalid.");
         return Optional.empty();
     }
+
+    public String getSymbol() {
+        switch (this) {
+            case SUM:
+                return "+";
+            case SUBS:
+                return "-";
+            case MUL:
+                return "x";
+            case DIV:
+                return ":";
+        }
+        return null;
+    }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="client.ClientTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-06T19:19:19" hostname="ip-10-104-198-102.eu-central-1.compute.internal" time="5.021">
+  <properties/>
+  <testcase name="shouldSendMessages()" classname="client.ClientTest" time="5.021"/>
+  <system-out><![CDATA[Listening...
+[UDP /192.168.1.50]
+0x255??
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -49,7 +49,8 @@ public class ClientParameters {
     }
 
     public byte[] toRequest() {
-        return new byte[0];
+        final String s = firstNumb.getVal() + this.operation.getSymbol() + secondNumb.getVal();
+        return s.getBytes();
     }
 
     public InetAddress address() {

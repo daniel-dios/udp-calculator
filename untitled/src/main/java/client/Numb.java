@@ -26,4 +26,8 @@ public class Numb {
     public boolean isZero() {
         return val == 0;
     }
+
+    public int getVal() {
+        return val;
+    }
 }
