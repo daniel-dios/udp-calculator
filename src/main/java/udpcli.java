@@ -31,7 +31,7 @@ public class udpcli {
                 System.out.println("El valor recibido es: " + result.answer());
                 break;
             case TIMEOUT:
-                System.out.printf("No se recibe nada por el socket despues del timeout de %ds.", TIMEOUT.toSeconds());
+                System.out.printf("No se recibe nada por el socket despues del timeout de %ds.%n", TIMEOUT.toSeconds());
                 break;
             case KO:
                 System.out.printf("El servidor ha respondido con KO reason %s.%n", result.answer());
