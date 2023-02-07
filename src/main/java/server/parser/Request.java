@@ -1,6 +1,6 @@
-package server;
+package server.parser;
 
-import client.Operation;
+import shared.Operation;
 import shared.OperableNumber;
 
 public class Request {
@@ -13,7 +13,6 @@ public class Request {
             final OperableNumber first,
             final OperableNumber second
     ) {
-
         this.operation = operation;
         this.first = first;
         this.second = second;

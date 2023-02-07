@@ -1,9 +1,22 @@
-package client;
+package shared;
 
 import java.util.Optional;
 
 public enum Operation {
-    SUM, SUBS, MUL, DIV;
+    SUM("+", "\\+"), SUBS("-", "\\-"), MUL("x", "x"), DIV(":", "\\:");
+
+    public final String symbol;
+    public final String regex;
+
+    Operation(final String symbol, final String regex) {
+        this.symbol = symbol;
+        this.regex = regex;
+    }
+
+    @Override
+    public String toString() {
+        return symbol;
+    }
 
     public static Optional<Operation> parse(final String arg) {
         switch (arg) {
@@ -21,19 +34,5 @@ public enum Operation {
         }
         System.out.println("Operation is invalid.");
         return Optional.empty();
-    }
-
-    public String getSymbol() {
-        switch (this) {
-            case SUM:
-                return "+";
-            case SUBS:
-                return "-";
-            case MUL:
-                return "x";
-            case DIV:
-                return ":";
-        }
-        return null;
     }
 }

@@ -9,14 +9,16 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.mockito.internal.verification.Times;
+import server.parser.Request;
+import server.parser.RequestParser;
 import server.service.CalculatorResult;
 import shared.OperableNumber;
-import client.Operation;
+import shared.Operation;
 import org.junit.jupiter.api.Test;
 import server.service.CalculatorService;
 import shared.Port;
 
-import static client.Operation.MUL;
+import static shared.Operation.MUL;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

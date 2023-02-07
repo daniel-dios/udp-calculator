@@ -3,6 +3,7 @@ package client;
 import java.net.InetAddress;
 import java.util.Optional;
 import shared.OperableNumber;
+import shared.Operation;
 import shared.Port;
 
 public class ClientParameters {
@@ -47,7 +48,7 @@ public class ClientParameters {
     }
 
     public byte[] toRequest() {
-        return (first.getVal() + this.operation.getSymbol() + this.second.getVal()).getBytes();
+        return (first.getVal() + this.operation.symbol + this.second.getVal()).getBytes();
     }
 
     public InetAddress address() {

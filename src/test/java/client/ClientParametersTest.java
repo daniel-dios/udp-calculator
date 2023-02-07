@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
 import shared.OperableNumber;
+import shared.Operation;
 import shared.Port;
 
 import static org.assertj.core.api.Assertions.assertThat;

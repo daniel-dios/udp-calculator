@@ -1,5 +1,5 @@
 import server.BlockingServer;
-import server.RequestParser;
+import server.parser.RequestParser;
 import server.ServerParameters;
 import server.service.CalculatorService;
 

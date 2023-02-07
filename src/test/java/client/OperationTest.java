@@ -1,11 +1,12 @@
 package client;
 
 import org.junit.jupiter.api.Test;
+import shared.Operation;
 
-import static client.Operation.DIV;
-import static client.Operation.MUL;
-import static client.Operation.SUBS;
-import static client.Operation.SUM;
+import static shared.Operation.DIV;
+import static shared.Operation.MUL;
+import static shared.Operation.SUBS;
+import static shared.Operation.SUM;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperationTest {
