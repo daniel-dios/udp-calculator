@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static client.model.Builders.buildRequest;
+import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,12 +52,13 @@ public class ClientTest {
 
     @ParameterizedTest
     @MethodSource("calculateMinAndMax")
-    void shouldReceiveMessages(String input) throws UnknownHostException {
+    void shouldReceiveMessages(String input) throws UnknownHostException, InterruptedException {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "1", "+", "2");
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
+        sleep(10000);
         final var actual = Client.sendRequest(x, Duration.ofSeconds(10));
 
         assertThat(actual.status).isEqualTo(ResultStatus.OK);

@@ -5,16 +5,19 @@ import java.util.HashMap;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
+import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GoldenTest {
 
-    void shouldSpeakEachOtherInLocalHost() throws UnknownHostException {
+    @Test
+    void shouldSpeakEachOtherInLocalHost() throws UnknownHostException, InterruptedException {
         final var hostAddress = InetAddress.getLocalHost().getHostAddress();
         final var port = String.valueOf(new Random().nextInt(1000) + 8000);
         newFixedThreadPool(1).submit(() -> udpser.main(new String[]{port, "1"}));
 
+        sleep(10000);
         final var actual = udpcli.sync(new String[]{hostAddress, port, "3", "x", "2"});
         assertThat(actual)
                 .isPresent()
