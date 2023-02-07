@@ -59,7 +59,7 @@ public class BlockingServerTest {
         final var first = buildNumber(4);
         final var second = buildNumber(2);
         final var operationAsText = "4:2";
-        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(4/2));
+        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(4 / 2));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort("8080");
