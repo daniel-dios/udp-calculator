@@ -47,11 +47,10 @@ public class BlockingServer {
                     final var second = OperableNumber.parse(splitByOperation[1]);
 
                     if (first.isPresent() && second.isPresent()) {
-                        calculator.calculate(secret, operation.get(), first.get(), second.get());
+                        final var result = calculator.calculate(secret, operation.get(), first.get(), second.get());
+                        final var sendPacket = new DatagramPacket(result.asBytes(), result.asBytes().length, dp.getAddress(), dp.getPort());
+                        serverSocket.send(sendPacket);
                     }
-
-                    final var sendPacket = new DatagramPacket("OK".getBytes(), "OK".getBytes().length, dp.getAddress(), dp.getPort());
-                    serverSocket.send(sendPacket);
                 }
                 // TODO handle this properly
             } catch (IOException e) {
