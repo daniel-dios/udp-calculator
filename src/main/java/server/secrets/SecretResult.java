@@ -1,4 +1,4 @@
-package server;
+package server.secrets;
 
 public class SecretResult {
     private final int value;

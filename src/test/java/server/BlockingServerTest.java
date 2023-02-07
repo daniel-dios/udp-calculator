@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
 import server.parser.Request;
 import server.parser.RequestParser;
+import server.secrets.Secret;
 import server.service.CalculatorService;
 import shared.OperableNumber;
 import shared.Operation;

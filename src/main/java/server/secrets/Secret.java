@@ -1,4 +1,4 @@
-package server;
+package server.secrets;
 
 import java.util.Optional;
 import shared.NumberUtils;

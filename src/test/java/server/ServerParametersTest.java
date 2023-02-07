@@ -1,6 +1,7 @@
 package server;
 
 import org.junit.jupiter.api.Test;
+import server.secrets.Secret;
 import shared.Port;
 
 import static org.assertj.core.api.Assertions.assertThat;
