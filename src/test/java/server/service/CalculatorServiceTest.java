@@ -11,10 +11,10 @@ import shared.OperationResult;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
-import static shared.Operation.DIV;
-import static shared.Operation.MUL;
-import static shared.Operation.SUBS;
-import static shared.Operation.SUM;
+import static shared.OperationSymbol.DIV;
+import static shared.OperationSymbol.MUL;
+import static shared.OperationSymbol.SUBS;
+import static shared.OperationSymbol.SUM;
 import static utils.Builders.number;
 import static utils.Builders.result;
 

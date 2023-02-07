@@ -3,7 +3,7 @@ package utils;
 import client.IP;
 import server.secrets.Secret;
 import shared.OperableNumber;
-import shared.Operation;
+import shared.OperationSymbol;
 import shared.OperationResult;
 import shared.Port;
 
@@ -29,8 +29,8 @@ public class Builders {
         return OperableNumber.parse(s).get();
     }
 
-    public static Operation operation(final String operation) {
-        return Operation.parse(operation).get();
+    public static OperationSymbol operation(final String operation) {
+        return OperationSymbol.parse(operation).get();
     }
 
     public static Secret secret(final String secret) {

@@ -13,7 +13,7 @@ import server.parser.Request;
 import server.parser.RequestParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
-import shared.Operation;
+import shared.OperationSymbol;
 import utils.Builders;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
@@ -24,8 +24,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static shared.Constants.KO;
-import static shared.Operation.DIV;
-import static shared.Operation.MUL;
+import static shared.OperationSymbol.DIV;
+import static shared.OperationSymbol.MUL;
 import static utils.Builders.port;
 import static utils.Builders.result;
 
@@ -61,7 +61,7 @@ public class BlockingServerTest {
         final var parser = mock(RequestParser.class);
         final var secret = new Secret(5);
         final var expectedResult = 7;
-        final var operation = Operation.DIV;
+        final var operation = OperationSymbol.DIV;
         final var first = Builders.number(4);
         final var second = Builders.number(2);
         final var operationAsText = "4:2";

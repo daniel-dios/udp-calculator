@@ -2,7 +2,7 @@ package client;
 
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
-import shared.Operation;
+import shared.OperationSymbol;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static utils.Builders.ip;
@@ -59,7 +59,7 @@ public class ClientParametersTest {
                 ip("192.168.1.9"),
                 port(port),
                 number(first),
-                Operation.SUM,
+                OperationSymbol.SUM,
                 number(second)
         );
         assertThat(parse)

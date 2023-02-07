@@ -2,7 +2,7 @@ package shared;
 
 import java.util.Optional;
 
-public enum Operation {
+public enum OperationSymbol {
     SUM("+", "\\+"),
     SUBS("-", "\\-"),
     MUL("x", "x"),
@@ -11,7 +11,7 @@ public enum Operation {
     public final String symbol;
     public final String regex;
 
-    Operation(final String symbol, final String regex) {
+    OperationSymbol(final String symbol, final String regex) {
         this.symbol = symbol;
         this.regex = regex;
     }
@@ -21,7 +21,7 @@ public enum Operation {
         return symbol;
     }
 
-    public static Optional<Operation> parse(final String arg) {
+    public static Optional<OperationSymbol> parse(final String arg) {
         switch (arg) {
             case "+":
                 return Optional.of(SUM);

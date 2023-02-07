@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import shared.Operation;
+import shared.OperationSymbol;
 import utils.Builders;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,10 +17,10 @@ public class RequestParserTest {
 
     public static Stream<Arguments> getValidRequests() {
         final var list = new ArrayList<Arguments>();
-        Arrays.stream(Operation.values()).forEach(operation -> {
+        Arrays.stream(OperationSymbol.values()).forEach(operation -> {
             for (int first = 0; first <= 10; first++) {
                 for (int second = 0; second <= 10; second++) {
-                    if (operation.equals(Operation.DIV) && second == 0) {
+                    if (operation.equals(OperationSymbol.DIV) && second == 0) {
                         continue;
                     }
                     list.add(Arguments.of(
@@ -31,7 +31,7 @@ public class RequestParserTest {
             }
         });
 
-        Arrays.stream(Operation.values()).forEach(operation -> {
+        Arrays.stream(OperationSymbol.values()).forEach(operation -> {
             for (int first = 245; first <= 255; first++) {
                 for (int second = 245; second <= 255; second++) {
                     final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, Builders.number(first), Builders.number(second)));
@@ -60,7 +60,7 @@ public class RequestParserTest {
 
     public static Stream<Arguments> getOutOfRangeRequests() {
         final var list = new ArrayList<Arguments>();
-        Arrays.stream(Operation.values()).forEach(operation -> {
+        Arrays.stream(OperationSymbol.values()).forEach(operation -> {
             for (int first = -10; first < 0; first++) {
                 for (int second = -10; second < 0; second++) {
                     final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second));
@@ -69,7 +69,7 @@ public class RequestParserTest {
             }
         });
 
-        Arrays.stream(Operation.values()).forEach(operation -> {
+        Arrays.stream(OperationSymbol.values()).forEach(operation -> {
             for (int first = 256; first <= 260; first++) {
                 for (int second = 256; second <= 260; second++) {
                     final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second));

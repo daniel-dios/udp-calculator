@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import shared.OperableNumber;
-import shared.Operation;
+import shared.OperationSymbol;
 
 public class RequestParser {
 
     public Optional<Request> parse(final byte[] receivedText) {
         final var trim = new String(receivedText).trim();
-        final var op = Arrays.stream(Operation.values())
+        final var op = Arrays.stream(OperationSymbol.values())
                 .filter(it -> trim.contains(it.symbol))
                 .findFirst();
 

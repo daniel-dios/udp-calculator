@@ -1,30 +1,30 @@
 package server.parser;
 
 import shared.OperableNumber;
-import shared.Operation;
+import shared.OperationSymbol;
 
 public class Request {
-    private final Operation operation;
+    private final OperationSymbol operationSymbol;
     private final OperableNumber first;
     private final OperableNumber second;
 
     public Request(
-            final Operation operation,
+            final OperationSymbol operationSymbol,
             final OperableNumber first,
             final OperableNumber second
     ) {
-        this.operation = operation;
+        this.operationSymbol = operationSymbol;
         this.first = first;
         this.second = second;
     }
 
     @Override
     public String toString() {
-        return String.format("(%s%s%s)", first, operation, second);
+        return String.format("(%s%s%s)", first, operationSymbol, second);
     }
 
-    public Operation operation() {
-        return this.operation;
+    public OperationSymbol operation() {
+        return this.operationSymbol;
     }
 
     public OperableNumber first() {
