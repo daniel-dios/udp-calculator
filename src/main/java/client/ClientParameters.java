@@ -2,6 +2,7 @@ package client;
 
 import java.net.InetAddress;
 import java.util.Optional;
+import shared.Port;
 
 public class ClientParameters {
 
@@ -11,13 +12,7 @@ public class ClientParameters {
     private final Operation operation;
     private final Numb secondNumb;
 
-    ClientParameters(
-            final IP ip,
-            final Port port,
-            final Numb firstNumb,
-            final Operation operation,
-            final Numb secondNumb
-    ) {
+    ClientParameters(final IP ip, final Port port, final Numb firstNumb, final Operation operation, final Numb secondNumb) {
         this.ip = ip;
         this.port = port;
         this.firstNumb = firstNumb;
@@ -31,26 +26,27 @@ public class ClientParameters {
             return Optional.empty();
         }
 
-        final Optional<IP> ip = IP.parse(args[0]);
-        final Optional<Port> port = Port.parse(args[1]);
-        final Optional<Numb> firstNumb = Numb.parse(args[2]);
-        final Optional<Operation> operation = Operation.parse(args[3]);
-        final Optional<Numb> secondNumb = Numb.parse(args[4]);
+        final var ip = IP.parse(args[0]);
+        final var port = Port.parse(args[1]);
+        final var first = Numb.parse(args[2]);
+        final var op = Operation.parse(args[3]);
+        final var second = Numb.parse(args[4]);
 
-        if (ip.isPresent() && port.isPresent() && firstNumb.isPresent() && operation.isPresent() && secondNumb.isPresent() && checkDiv(operation.get(), secondNumb.get())) {
-            return Optional.of(new ClientParameters(ip.get(), port.get(), firstNumb.get(), operation.get(), secondNumb.get()));
-        }
-
-        return Optional.empty();
+        return ip.isPresent() && port.isPresent() && first.isPresent() && op.isPresent() && second.isPresent() && !isDivAndZero(op.get(), second.get())
+                ? Optional.of(new ClientParameters(ip.get(), port.get(), first.get(), op.get(), second.get()))
+                : Optional.empty();
     }
 
-    private static boolean checkDiv(final Operation operation, final Numb numb) {
-        return !(operation.equals(Operation.DIV) && numb.isZero());
+    private static boolean isDivAndZero(final Operation operation, final Numb numb) {
+        if (operation.equals(Operation.DIV) && numb.isZero()) {
+            System.out.println("Second number must be not 0 when DIV");
+            return true;
+        }
+        return false;
     }
 
     public byte[] toRequest() {
-        final String s = firstNumb.getVal() + this.operation.getSymbol() + secondNumb.getVal();
-        return s.getBytes();
+        return (firstNumb.getVal() + this.operation.getSymbol() + this.secondNumb.getVal()).getBytes();
     }
 
     public InetAddress address() {

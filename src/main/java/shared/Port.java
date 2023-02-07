@@ -1,4 +1,4 @@
-package client;
+package shared;
 
 import java.util.Optional;
 
@@ -13,12 +13,12 @@ public class Port {
         try {
             final int port = Integer.parseInt(arg);
             if (port < 0 || port > 65535) {
-                System.out.println("Numb is out of [0, 255] range.");
+                System.out.println("Port is out of [0, 65535] range.");
                 return Optional.empty();
             }
             return Optional.of(new Port(port));
         } catch (NumberFormatException e) {
-            System.out.println("Numb is invalid.");
+            System.out.println("Port is invalid.");
             return Optional.empty();
         }
     }
