@@ -1,8 +1,8 @@
 package server;
 
 import java.util.Optional;
-import server.service.CalculatorResult;
 import shared.NumberUtils;
+import shared.OperationResult;
 
 public class Secret {
     private final int value;
@@ -30,7 +30,7 @@ public class Secret {
         return value;
     }
 
-    public SecretResult applyTo(final CalculatorResult result) {
+    public SecretResult applyTo(final OperationResult result) {
         return new SecretResult(this.value + result.value());
     }
 }
