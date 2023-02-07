@@ -45,7 +45,7 @@ public class ClientParameters {
     }
 
     private static boolean checkDiv(final Operation operation, final Numb numb) {
-        return operation.equals(Operation.DIV) && numb.isZero();
+        return !(operation.equals(Operation.DIV) && numb.isZero());
     }
 
     public byte[] toRequest() {
