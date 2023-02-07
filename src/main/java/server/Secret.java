@@ -1,6 +1,7 @@
 package server;
 
 import java.util.Optional;
+import server.service.CalculatorResult;
 import shared.NumberUtils;
 
 public class Secret {
@@ -27,5 +28,9 @@ public class Secret {
     @Override
     public int hashCode() {
         return value;
+    }
+
+    public SecretResult applyTo(final CalculatorResult result) {
+        return new SecretResult(this.value + result.value());
     }
 }

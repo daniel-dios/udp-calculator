@@ -12,10 +12,10 @@ import org.mockito.internal.verification.Times;
 import server.parser.Request;
 import server.parser.RequestParser;
 import server.service.CalculatorResult;
+import server.service.CalculatorService;
 import shared.OperableNumber;
 import shared.Operation;
 import org.junit.jupiter.api.Test;
-import server.service.CalculatorService;
 import shared.Port;
 
 import static shared.Operation.MUL;
@@ -37,7 +37,7 @@ public class BlockingServerTest {
         final var operation = MUL;
         final var first = buildNumber(3);
         final var second = buildNumber(2);
-        when(calculator.calculate(secret, operation, first, second)).thenReturn(new CalculatorResult(10));
+        when(calculator.calculate(operation, first, second)).thenReturn(new CalculatorResult(10));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort(String.valueOf(9000));
@@ -46,7 +46,7 @@ public class BlockingServerTest {
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
 
         updCall.get(30, TimeUnit.SECONDS);
-        verify(calculator, new Times(1)).calculate(secret, operation, first, second);
+        verify(calculator, new Times(1)).calculate(operation, first, second);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class BlockingServerTest {
         final var first = buildNumber(4);
         final var second = buildNumber(2);
         final var operationAsText = "4:2";
-        when(calculator.calculate(secret, operation, first, second)).thenReturn(new CalculatorResult(expectedResult));
+        when(calculator.calculate(operation, first, second)).thenReturn(new CalculatorResult(expectedResult));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort("8080");
@@ -68,7 +68,7 @@ public class BlockingServerTest {
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
 
         final var answer = updCall.get(30, TimeUnit.SECONDS);
-        verify(calculator, new Times(1)).calculate(secret, operation, first, second);
+        verify(calculator, new Times(1)).calculate(operation, first, second);
         assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(String.valueOf(expectedResult));
     }
 

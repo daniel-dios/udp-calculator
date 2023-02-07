@@ -1,6 +1,7 @@
 package shared;
 
 import java.util.Optional;
+import server.service.CalculatorResult;
 
 public class OperableNumber {
     private final int val;
@@ -34,5 +35,13 @@ public class OperableNumber {
 
     public int getVal() {
         return val;
+    }
+
+    public OperableNumber add(final OperableNumber second) {
+        return new OperableNumber(this.val + second.val);
+    }
+
+    public CalculatorResult toCalculatorResult() {
+        return new CalculatorResult(this.val);
     }
 }

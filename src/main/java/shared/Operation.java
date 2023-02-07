@@ -3,7 +3,10 @@ package shared;
 import java.util.Optional;
 
 public enum Operation {
-    SUM("+", "\\+"), SUBS("-", "\\-"), MUL("x", "x"), DIV(":", "\\:");
+    SUM("+", "\\+"),
+    SUBS("-", "\\-"),
+    MUL("x", "x"),
+    DIV(":", "\\:");
 
     public final String symbol;
     public final String regex;
