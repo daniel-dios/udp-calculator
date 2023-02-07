@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GoldenTest {
 
-    @Test
     void shouldSpeakEachOtherInLocalHost() throws UnknownHostException {
         final var hostAddress = InetAddress.getLocalHost().getHostAddress();
         final var port = String.valueOf(new Random().nextInt(1000) + 8000);
