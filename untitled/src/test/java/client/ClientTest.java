@@ -18,10 +18,8 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientTest {
@@ -31,7 +29,6 @@ public class ClientTest {
         final int port = new Random().nextInt(1000) + 8000;
         final ClientParameters x = buildRequest(port, "0", "x", "255");
         Callable<String> task = () -> listen(port);
-
         Future<String> future = Executors.newFixedThreadPool(1)
                 .submit(task);
 
@@ -57,17 +54,16 @@ public class ClientTest {
     @MethodSource("calculateMinAndMax")
     void shouldReceiveMessages(String input) throws UnknownHostException {
         final int port = new Random().nextInt(1000) + 8000;
-        final ClientParameters x = buildRequest(port, "0", "x", "255");
-
+        final ClientParameters x = buildRequest(port, "1", "+", "2");
         Executors.newFixedThreadPool(1)
-                .submit(() -> send(port, input));
+                .submit(() -> serverAnswers(port, input));
 
         final Optional<String> actual = Client.sendRequest(x);
 
         assertThat(actual).isPresent().get().isEqualTo(input);
     }
 
-    private String send(final int port, final String s) {
+    private String serverAnswers(final int port, final String s) {
         try (DatagramSocket serverSocket = new DatagramSocket(port)) {
             System.out.println("Listening...");
 
@@ -102,12 +98,6 @@ public class ClientTest {
                 Operation.parse(operation).get(),
                 Numb.parse(second).get()
         );
-    }
-
-    private String listen2(final int port) throws InterruptedException {
-        System.out.println("yoooo");
-        sleep(10000);
-        return "hi";
     }
 
     private String listen(final int port) {
