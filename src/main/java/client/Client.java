@@ -11,14 +11,14 @@ import java.util.Optional;
 public class Client {
 
     public static Optional<String> sendRequest(ClientParameters params) {
-        try (DatagramSocket ds = new DatagramSocket()) {
+        try (final var ds = new DatagramSocket()) {
             ds.setSoTimeout(10000);
-            final byte[] send = params.toRequest();
-            final DatagramPacket datagramPacket = new DatagramPacket(send, send.length, params.address(), params.port());
+            final var send = params.toRequest();
+            final var datagramPacket = new DatagramPacket(send, send.length, params.address(), params.port());
 
             ds.send(datagramPacket);
 
-            final DatagramPacket received = new DatagramPacket(new byte[5], 5); // -255 to 65280 are 5 characters as max.
+            final var received = new DatagramPacket(new byte[5], 5); // -255 to 65280 are 5 characters as max.
             ds.receive(received);
             return Optional.of(new String(received.getData()).trim());
         } catch (SecurityException e) {

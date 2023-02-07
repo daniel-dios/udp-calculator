@@ -2,7 +2,6 @@ package client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +26,6 @@ public class ClientParametersTest {
 
     @Test
     void shouldReturnEmptyWhenFirstNumberIsNotValid() {
-
         assertThat(ClientParameters.parse(new String[]{"192.168.1.9", "9000", "4asd", "+", "5"})).isEmpty();
         assertThat(ClientParameters.parse(new String[]{"192.168.1.9", "9000", "asd", "+", "5"})).isEmpty();
         assertThat(ClientParameters.parse(new String[]{"192.168.1.9", "9000", "455", "+", "5"})).isEmpty();
@@ -47,11 +45,11 @@ public class ClientParametersTest {
 
     @Test
     void shouldReturnValid() throws UnknownHostException {
-        String[] input = new String[]{"192.168.1.9", "9000", "4", "+", "5"};
+        final var input = new String[]{"192.168.1.9", "9000", "4", "+", "5"};
 
-        final Optional<ClientParameters> parse = ClientParameters.parse(input);
+        final var parse = ClientParameters.parse(input);
 
-        final ClientParameters expected = new ClientParameters(
+        final var expected = new ClientParameters(
                 new IP(InetAddress.getByName("192.168.1.9")),
                 new Port(9000),
                 new Numb(4),

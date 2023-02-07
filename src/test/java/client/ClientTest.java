@@ -6,12 +6,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
@@ -26,16 +24,16 @@ public class ClientTest {
 
     @Test
     void shouldSendMessages() throws ExecutionException, InterruptedException, TimeoutException, UnknownHostException {
-        final int port = new Random().nextInt(1000) + 8000;
-        final ClientParameters x = buildRequest(port, "0", "x", "255");
-        Callable<String> task = () -> listen(port);
-        Future<String> future = Executors.newFixedThreadPool(1)
+        final var port = new Random().nextInt(1000) + 8000;
+        final var x = buildRequest(port, "0", "x", "255");
+        final Callable<String> task = () -> listen(port);
+        final var future = Executors.newFixedThreadPool(1)
                 .submit(task);
 
         Executors.newFixedThreadPool(1)
                 .submit(() -> Client.sendRequest(x));
 
-        final String receivedDataInServer = future.get(10, TimeUnit.SECONDS);
+        final var receivedDataInServer = future.get(10, TimeUnit.SECONDS);
         assertThat(receivedDataInServer)
                 .contains("0x255");
     }
@@ -53,28 +51,28 @@ public class ClientTest {
     @ParameterizedTest
     @MethodSource("calculateMinAndMax")
     void shouldReceiveMessages(String input) throws UnknownHostException {
-        final int port = new Random().nextInt(1000) + 8000;
-        final ClientParameters x = buildRequest(port, "1", "+", "2");
+        final var port = new Random().nextInt(1000) + 8000;
+        final var x = buildRequest(port, "1", "+", "2");
         Executors.newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
-        final Optional<String> actual = Client.sendRequest(x);
+        final var actual = Client.sendRequest(x);
 
         assertThat(actual).isPresent().get().isEqualTo(input);
     }
 
     private String serverAnswers(final int port, final String s) {
-        try (DatagramSocket serverSocket = new DatagramSocket(port)) {
+        try (final var serverSocket = new DatagramSocket(port)) {
             System.out.println("Listening...");
 
-            final byte[] receiveData = new byte[7];
-            final DatagramPacket dp = new DatagramPacket(receiveData, receiveData.length);
+            final var receiveData = new byte[7];
+            final var dp = new DatagramPacket(receiveData, receiveData.length);
 
             serverSocket.receive(dp);
 
             System.out.println("[UDP " + dp.getAddress() + "]");
 
-            DatagramPacket sendPacket = new DatagramPacket(
+            final var sendPacket = new DatagramPacket(
                     s.getBytes(),
                     s.getBytes().length,
                     dp.getAddress(),
@@ -90,7 +88,7 @@ public class ClientTest {
     }
 
     private static ClientParameters buildRequest(final int port, final String first, final String operation, final String second) throws UnknownHostException {
-        final IP ip = new IP(InetAddress.getLocalHost());
+        final var ip = new IP(InetAddress.getLocalHost());
         return new ClientParameters(
                 ip,
                 Port.parse(String.valueOf(port)).get(),
@@ -101,17 +99,17 @@ public class ClientTest {
     }
 
     private String listen(final int port) {
-        try (DatagramSocket serverSocket = new DatagramSocket(port)) {
+        try (final var serverSocket = new DatagramSocket(port)) {
             System.out.println("Listening...");
 
-            final byte[] receiveData = new byte[7];
-            final DatagramPacket dp = new DatagramPacket(receiveData, receiveData.length);
+            final var receiveData = new byte[7];
+            final var dp = new DatagramPacket(receiveData, receiveData.length);
 
             serverSocket.receive(dp);
 
             System.out.println("[UDP " + dp.getAddress() + "]");
 
-            DatagramPacket sendPacket = new DatagramPacket(
+            final var sendPacket = new DatagramPacket(
                     BigInteger.valueOf(1).toByteArray(),
                     BigInteger.valueOf(1).toByteArray().length,
                     dp.getAddress(),

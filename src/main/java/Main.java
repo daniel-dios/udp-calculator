@@ -1,12 +1,11 @@
 import client.Client;
 import client.ClientParameters;
-import java.math.BigInteger;
 import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
         final Optional<ClientParameters> maybeParams = ClientParameters.parse(args);
-        if (!maybeParams.isPresent()) {
+        if (maybeParams.isEmpty()) {
             System.out.println("Va sin tildes:");
             System.out.println("El formato correcto es: udpcli <ip_address_servidor> <port_servidor> <numero> <simbolo> <numero>");
             System.out.println("Los simbolos son para suma '+', resta '-', multiplicacion 'x', 'X' o '*' y division ':' o '/'");
@@ -15,7 +14,7 @@ public class Main {
             return;
         }
 
-        final Optional<String> bytes = Client.sendRequest(maybeParams.get());
+        final var bytes = Client.sendRequest(maybeParams.get());
 
         if (bytes.isPresent()) {
             System.out.println("El valor recibido es: " + bytes.get());
