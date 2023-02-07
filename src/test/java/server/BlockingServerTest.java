@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static shared.Constants.KO;
 import static shared.Operation.DIV;
 import static shared.Operation.MUL;
 import static utils.Builders.port;
@@ -92,7 +93,7 @@ public class BlockingServerTest {
 
         final var answer = updCall.get(30, SECONDS);
         verify(calculator, NEVER).calculate(any(), any(), any());
-        assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo("KO");
+        assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(KO);
     }
 
     @Test
@@ -114,7 +115,7 @@ public class BlockingServerTest {
 
         final var answer = updCall.get(30, SECONDS);
         verify(calculator, ONCE).calculate(operation, first, second);
-        assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo("KO");
+        assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(KO);
     }
 
     private Optional<String> sendUDP(final int port, final String operation) throws IOException {

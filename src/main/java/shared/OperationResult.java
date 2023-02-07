@@ -13,7 +13,7 @@ public class OperationResult {
 
     @Override
     public String toString() {
-        return "Result:" + val;
+        return String.valueOf(val);
     }
 
     @Override

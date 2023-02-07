@@ -1,3 +1,5 @@
+import client.Result;
+import client.ResultStatus;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -15,8 +17,11 @@ public class GoldenTest {
         final var port = String.valueOf(new Random().nextInt(1000) + 8000);
         newFixedThreadPool(1).submit(() -> udpser.main(new String[]{port, "1"}));
 
-        final String actual = udpcli.sync(new String[]{hostAddress, port, "3", "x", "2"});
-        assertThat(actual).isEqualTo("7");
+        final var actual = udpcli.sync(new String[]{hostAddress, port, "3", "x", "2"});
+        assertThat(actual)
+                .isPresent()
+                .get()
+                .isEqualTo(Result.ok("7"));
     }
 
     @Test
@@ -37,6 +42,10 @@ public class GoldenTest {
         strings.put(new String[]{hostAddress, port, "255", ":", "254"}, "12");
         strings.put(new String[]{hostAddress, port, "1", ":", "255"}, "11");
 
-        strings.forEach((key, value) -> assertThat(udpcli.sync(key)).isEqualTo(value));
+        strings.forEach((key, value) -> assertThat(udpcli.sync(key))
+                .isPresent()
+                .get()
+                .usingRecursiveComparison()
+                .isEqualTo(Result.ok(value)));
     }
 }

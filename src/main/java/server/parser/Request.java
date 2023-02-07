@@ -20,7 +20,7 @@ public class Request {
 
     @Override
     public String toString() {
-        return String.format("[%s%s%s]", first, operation, second);
+        return String.format("(%s%s%s)", first, operation, second);
     }
 
     public Operation operation() {

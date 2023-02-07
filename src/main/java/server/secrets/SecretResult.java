@@ -10,4 +10,9 @@ public class SecretResult {
     public byte[] asBytes() {
         return String.valueOf(value).getBytes();
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

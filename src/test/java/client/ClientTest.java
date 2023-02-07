@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Duration;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -34,7 +35,7 @@ public class ClientTest {
                 .submit(task);
 
         newFixedThreadPool(1)
-                .submit(() -> Client.sendRequest(x));
+                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
 
         final var receivedDataInServer = future.get(10, SECONDS);
         assertThat(receivedDataInServer)
@@ -59,9 +60,10 @@ public class ClientTest {
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
-        final var actual = Client.sendRequest(x);
+        final var actual = Client.sendRequest(x, Duration.ofSeconds(10));
 
-        assertThat(actual).isPresent().get().isEqualTo(input);
+        assertThat(actual.status).isEqualTo(ResultStatus.OK);
+        assertThat(actual.answer()).isEqualTo(input);
     }
 
     @Test
@@ -71,9 +73,19 @@ public class ClientTest {
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, "KO"));
 
-        final var actual = Client.sendRequest(x);
+        final var actual = Client.sendRequest(x, Duration.ofSeconds(10));
 
-        assertThat(actual).isPresent().get().isEqualTo("KO");
+        assertThat(actual.status).isEqualTo(ResultStatus.KO);
+    }
+
+    @Test
+    void shouldHandleTimeout() throws UnknownHostException {
+        final var port = new Random().nextInt(1000) + 8000;
+        final var x = buildRequest(port, "1", "+", "2");
+
+        final var actual = Client.sendRequest(x, Duration.ofSeconds(1));
+
+        assertThat(actual.status).isEqualTo(ResultStatus.TIMEOUT);
     }
 
     private String serverAnswers(final int port, final String s) {

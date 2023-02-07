@@ -1,9 +1,14 @@
 import client.Client;
 import client.ClientParameters;
+import client.Result;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Duration;
+import java.util.Optional;
 
 public class udpcli {
+
+    public static final Duration TIMEOUT = Duration.ofSeconds(10);
 
     public static void main(String[] args) {
         ClientParameters
@@ -14,24 +19,24 @@ public class udpcli {
                 );
     }
 
-    public static String sync(String[] args) {
+    public static Optional<Result> sync(String[] args) {
         return ClientParameters.parse(args)
-                .flatMap(Client::sendRequest)
-                .orElse("KO");
+                .map(params -> Client.sendRequest(params, TIMEOUT));
     }
 
     private static void sendRequest(final ClientParameters params) {
-        Client.sendRequest(params)
-                .ifPresentOrElse(
-                        it -> {
-                            if ("KO".equals(it)) {
-                                System.out.println("El servidor ha respondido con KO.");
-                            } else {
-                                System.out.println("El valor recibido es: " + it);
-                            }
-                        },
-                        () -> System.out.println("No se recibe nada por el socket despues de 10.")
-                );
+        final var result = Client.sendRequest(params, TIMEOUT);
+        switch (result.status) {
+            case OK:
+                System.out.println("El valor recibido es: " + result.answer());
+                break;
+            case TIMEOUT:
+                System.out.printf("No se recibe nada por el socket despues del timeout de %ds.", TIMEOUT.toSeconds());
+                break;
+            case KO:
+                System.out.printf("El servidor ha respondido con KO reason %s.%n", result.answer());
+                break;
+        }
     }
 
     private static void printInstructions() {
