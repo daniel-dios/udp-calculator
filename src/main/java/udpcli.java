@@ -23,8 +23,14 @@ public class udpcli {
     private static void sendRequest(final ClientParameters params) {
         Client.sendRequest(params)
                 .ifPresentOrElse(
-                        it -> System.out.println("El valor recibido es: " + it),
-                        () -> System.out.println("No se recibe nada por el socket después de 10s.")
+                        it -> {
+                            if ("KO".equals(it)) {
+                                System.out.println("El servidor ha respondido con KO.");
+                            } else {
+                                System.out.println("El valor recibido es: " + it);
+                            }
+                        },
+                        () -> System.out.println("No se recibe nada por el socket despues de 10.")
                 );
     }
 

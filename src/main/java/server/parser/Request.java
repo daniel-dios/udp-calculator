@@ -18,6 +18,11 @@ public class Request {
         this.second = second;
     }
 
+    @Override
+    public String toString() {
+        return String.format("[%s%s%s]", first, operation, second);
+    }
+
     public Operation operation() {
         return this.operation;
     }

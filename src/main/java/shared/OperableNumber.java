@@ -54,6 +54,6 @@ public class OperableNumber {
 
     @Override
     public String toString() {
-        return String.format("[%d]", val);
+        return String.format("%d", val);
     }
 }

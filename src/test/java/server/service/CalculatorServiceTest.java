@@ -1,6 +1,7 @@
 package server.service;
 
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,6 +9,7 @@ import shared.OperableNumber;
 import shared.OperationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
 import static shared.Operation.DIV;
 import static shared.Operation.MUL;
@@ -37,7 +39,7 @@ public class CalculatorServiceTest {
             final OperableNumber first,
             final OperableNumber second,
             final OperationResult expected
-    ) {
+    ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(SUM, first, second);
 
         assertThat(actual).isEqualTo(expected);
@@ -64,7 +66,7 @@ public class CalculatorServiceTest {
             final OperableNumber first,
             final OperableNumber second,
             final OperationResult expected
-    ) {
+    ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(SUBS, first, second);
 
         assertThat(actual).isEqualTo(expected);
@@ -91,7 +93,7 @@ public class CalculatorServiceTest {
             final OperableNumber first,
             final OperableNumber second,
             final OperationResult expected
-    ) {
+    ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(MUL, first, second);
 
         assertThat(actual).isEqualTo(expected);
@@ -117,10 +119,16 @@ public class CalculatorServiceTest {
             final OperableNumber first,
             final OperableNumber second,
             final OperationResult expected
-    ) {
+    ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(DIV, first, second);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDivByZero() {
+        assertThatThrownBy(() -> new CalculatorService().calculate(DIV, number("1"), number("0")))
+                .isInstanceOf(CalculatorService.CalculatorInputException.class);
     }
 
     private static OperationResult result(final int value) {

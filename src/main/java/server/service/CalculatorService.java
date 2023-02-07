@@ -5,7 +5,10 @@ import shared.Operation;
 import shared.OperationResult;
 
 public class CalculatorService {
-    public OperationResult calculate(final Operation operation, final OperableNumber first, final OperableNumber second) {
+
+    public static final CalculatorInputException CALCULATOR_INPUT_EXCEPTION = new CalculatorInputException("I can't divide by Zero");
+
+    public OperationResult calculate(final Operation operation, final OperableNumber first, final OperableNumber second) throws CalculatorInputException {
         switch (operation) {
             case SUM:
                 return first.add(second);
@@ -14,8 +17,17 @@ public class CalculatorService {
             case MUL:
                 return first.mul(second);
             case DIV:
+                if (second.isZero()) {
+                    throw CALCULATOR_INPUT_EXCEPTION;
+                }
                 return first.div(second);
         }
         throw new RuntimeException("Unreachable code");
+    }
+
+    public static class CalculatorInputException extends Throwable {
+        public CalculatorInputException(final String s) {
+            super(s);
+        }
     }
 }

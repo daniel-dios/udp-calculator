@@ -31,7 +31,6 @@ public class RequestParser {
             System.out.printf("Numbers %s are not valid.%n", Arrays.stream(numbers).collect(Collectors.toList()));
             return Optional.empty();
         }
-
         return Optional.of(new Request(op.get(), first.get(), second.get()));
     }
 }

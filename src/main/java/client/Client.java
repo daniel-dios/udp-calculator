@@ -20,24 +20,28 @@ public class Client {
 
             final var received = new DatagramPacket(new byte[5], 5); // -255 to 65280 are 5 characters as max.
             ds.receive(received);
-            return Optional.of(new String(received.getData()).trim());
+
+            final byte[] data = received.getData();
+            final String trim = new String(data).trim();
+            System.out.printf("Received %d bytes from server %s %n", data.length, trim);
+            return Optional.of(trim);
         } catch (SecurityException e) {
-            System.out.println(" – if a security manager exists and its checkMulticast or checkConnect method doesn't allow the send.");
+            System.out.println("A security manager exists and its checkMulticast or checkConnect method doesn't allow the send.");
             return Optional.empty();
         } catch (PortUnreachableException e) {
-            System.out.println(" – may be thrown if the socket is connected to a currently unreachable destination. Note, there is no guarantee that the exception will be thrown.");
+            System.out.println("The socket is connected to a currently unreachable destination. Note, there is no guarantee that the exception will be thrown.");
             return Optional.empty();
         } catch (IllegalBlockingModeException e) {
-            System.out.println(" – if this socket has an associated channel, and the channel is in non-blocking mode.");
+            System.out.println("This socket has an associated channel, and the channel is in non-blocking mode.");
             return Optional.empty();
         } catch (IllegalArgumentException e) {
-            System.out.println(" – if the socket is connected, and connected address and packet address differ.");
+            System.out.println("The socket is connected, and connected address and packet address differ.");
             return Optional.empty();
         } catch (SocketTimeoutException e) {
-            System.out.println(" – if setSoTimeout was previously called and the timeout has expired.");
+            System.out.println("SetSoTimeout was previously called and the timeout has expired.");
             return Optional.empty();
         } catch (IOException e) {
-            System.out.println(" – if an I/O error occurs.");
+            System.out.println("I/O error occurred.");
             return Optional.empty();
         }
     }
