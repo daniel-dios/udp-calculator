@@ -1,4 +1,4 @@
-package client;
+package client.model;
 
 import java.util.Optional;
 
@@ -9,11 +9,11 @@ class Port {
         this.val = val;
     }
 
-    public static Optional<Port> parse(final String arg) {
+    static Optional<Port> parse(final String arg) {
         return NumberUtils.validateRange(arg, 0, 65535).map(Port::new);
     }
 
-    public int getValue() {
+    int getValue() {
         return this.val;
     }
 }

@@ -1,10 +1,10 @@
-package client;
+package client.response;
 
 import java.time.Duration;
 
-import static client.ResultStatus.KO;
-import static client.ResultStatus.OK;
-import static client.ResultStatus.TIMEOUT;
+import static client.response.ResultStatus.KO;
+import static client.response.ResultStatus.OK;
+import static client.response.ResultStatus.TIMEOUT;
 
 public class Result {
 

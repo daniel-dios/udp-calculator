@@ -1,4 +1,4 @@
-package client;
+package client.model;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ public class OperableNumber {
         this.val = val;
     }
 
-    public static Optional<OperableNumber> parse(final String arg) {
+    static Optional<OperableNumber> parse(final String arg) {
         return NumberUtils.validateRange(arg, 0, 255).map(OperableNumber::new);
     }
 

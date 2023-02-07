@@ -1,11 +1,11 @@
-package client;
+package client.model;
 
 import org.junit.jupiter.api.Test;
 
-import static client.OperationSymbol.DIV;
-import static client.OperationSymbol.MUL;
-import static client.OperationSymbol.SUBS;
-import static client.OperationSymbol.SUM;
+import static client.model.OperationSymbol.DIV;
+import static client.model.OperationSymbol.MUL;
+import static client.model.OperationSymbol.SUBS;
+import static client.model.OperationSymbol.SUM;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperationSymbolTest {

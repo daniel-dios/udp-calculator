@@ -1,6 +1,6 @@
 import client.Client;
-import client.ClientParameters;
-import client.Result;
+import client.model.ClientParameters;
+import client.response.Result;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;

@@ -1,5 +1,6 @@
-package client;
+package client.model;
 
+import client.model.OperableNumber;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

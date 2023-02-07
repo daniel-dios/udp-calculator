@@ -1,4 +1,4 @@
-package client;
+package client.model;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -11,7 +11,7 @@ public class IP {
         this.val = val;
     }
 
-    public static Optional<IP> parse(final String arg) {
+    static Optional<IP> parse(final String arg) {
         try {
             if (arg.split("\\.").length != 4) {
                 System.out.println("IP is not valid format X.X.X.X.");

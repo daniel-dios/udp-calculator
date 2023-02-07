@@ -1,10 +1,10 @@
-package client;
+package client.model;
 
 import org.junit.jupiter.api.Test;
 
-import static client.Builders.ip;
-import static client.Builders.number;
-import static client.Builders.port;
+import static client.model.Builders.ip;
+import static client.model.Builders.number;
+import static client.model.Builders.port;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientParametersTest {

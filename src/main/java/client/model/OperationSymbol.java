@@ -1,15 +1,15 @@
-package client;
+package client.model;
 
-import java.util.Optional;
 import contract.GlobalConstants;
+import java.util.Optional;
 
-public enum OperationSymbol {
+enum OperationSymbol {
     SUM(GlobalConstants.SUM),
     SUBS(GlobalConstants.SUBS),
     MUL(GlobalConstants.MUL),
     DIV(GlobalConstants.DIV);
 
-    public final String symbol;
+    final String symbol;
 
     OperationSymbol(final String symbol) {
         this.symbol = symbol;
@@ -20,7 +20,7 @@ public enum OperationSymbol {
         return symbol;
     }
 
-    public static Optional<OperationSymbol> parse(final String arg) {
+    static Optional<OperationSymbol> parse(final String arg) {
         switch (arg) {
             case "+":
                 return Optional.of(SUM);

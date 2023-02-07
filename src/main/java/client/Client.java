@@ -1,5 +1,7 @@
 package client;
 
+import client.model.ClientParameters;
+import client.response.Result;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -8,9 +10,9 @@ import java.net.SocketTimeoutException;
 import java.nio.channels.IllegalBlockingModeException;
 import java.time.Duration;
 
-import static client.Result.ko;
-import static client.Result.ok;
-import static client.Result.timeout;
+import static client.response.Result.ko;
+import static client.response.Result.ok;
+import static client.response.Result.timeout;
 import static contract.GlobalConstants.isKO;
 
 public class Client {

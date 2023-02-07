@@ -1,9 +1,9 @@
 package client;
 
+import client.response.ResultStatus;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
 import java.util.Random;
@@ -16,10 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static client.Builders.ip;
-import static client.Builders.number;
-import static client.Builders.operation;
-import static client.Builders.port;
+import static client.model.Builders.buildRequest;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -106,15 +103,5 @@ public class ClientTest {
             System.out.println("IO ERROR");
             return "error";
         }
-    }
-
-    private static ClientParameters buildRequest(final int port, final String first, final String operation, final String second) throws UnknownHostException {
-        return new ClientParameters(
-                ip(InetAddress.getLocalHost().getHostAddress()),
-                port(port),
-                number(first),
-                operation(operation),
-                number(second)
-        );
     }
 }

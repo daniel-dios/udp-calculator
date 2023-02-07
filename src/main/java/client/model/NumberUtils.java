@@ -1,9 +1,9 @@
-package client;
+package client.model;
 
 import java.util.Optional;
 
-public class NumberUtils {
-    public static Optional<Integer> validateRange(final String arg, final int min, final int max) {
+class NumberUtils {
+    static Optional<Integer> validateRange(final String arg, final int min, final int max) {
         try {
             final int number = Integer.parseInt(arg);
             if (number < min || number > max) {
