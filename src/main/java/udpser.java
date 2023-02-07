@@ -1,4 +1,5 @@
 import server.BlockingServer;
+import server.RequestParser;
 import server.ServerParameters;
 import server.service.CalculatorService;
 
@@ -13,7 +14,7 @@ public class udpser {
     }
 
     private static void listen(final ServerParameters params) {
-        new BlockingServer(params.getSecret(), new CalculatorService())
+        new BlockingServer(params.getSecret(), new RequestParser(), new CalculatorService())
                 .startListeningForever(params.getPort());
     }
 

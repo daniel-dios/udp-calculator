@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.assertj.core.api.Assertions;
 import org.mockito.internal.verification.Times;
 import server.service.CalculatorResult;
 import shared.OperableNumber;
@@ -17,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import server.service.CalculatorService;
 import shared.Port;
 
+import static client.Operation.MUL;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,32 +29,44 @@ public class BlockingServerTest {
     @Test
     void shouldCallCalculatorService() throws ExecutionException, InterruptedException, TimeoutException {
         final var calculator = mock(CalculatorService.class);
+        final var parser = mock(RequestParser.class);
         final var secret = new Secret(4);
-        when(calculator.calculate(secret, Operation.MUL, buildNumber(3), buildNumber(2))).thenReturn(new CalculatorResult(10));
-        final var server = new BlockingServer(secret, calculator);
+        final var operationAsText = "3x2";
+        final var operation = MUL;
+        final var first = buildNumber(3);
+        final var second = buildNumber(2);
+        when(calculator.calculate(secret, operation, first, second)).thenReturn(new CalculatorResult(10));
+        when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
+        final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort(String.valueOf(9000));
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
-        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), "3x2"));
+        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
 
         updCall.get(30, TimeUnit.SECONDS);
-        verify(calculator, new Times(1)).calculate(secret, Operation.MUL, buildNumber(3), buildNumber(2));
+        verify(calculator, new Times(1)).calculate(secret, operation, first, second);
     }
 
     @Test
     void shouldAnswerProperly() throws ExecutionException, InterruptedException, TimeoutException {
         final var calculator = mock(CalculatorService.class);
+        final var parser = mock(RequestParser.class);
         final var secret = new Secret(5);
-        final int expectedResult = 7;
-        when(calculator.calculate(secret, Operation.DIV, buildNumber(4), buildNumber(2))).thenReturn(new CalculatorResult(expectedResult));
-        final var server = new BlockingServer(secret, calculator);
+        final var expectedResult = 7;
+        final var operation = Operation.DIV;
+        final var first = buildNumber(4);
+        final var second = buildNumber(2);
+        final var operationAsText = "4:2";
+        when(calculator.calculate(secret, operation, first, second)).thenReturn(new CalculatorResult(expectedResult));
+        when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
+        final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort("8080");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
-        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), "4:2"));
+        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
 
         final var answer = updCall.get(30, TimeUnit.SECONDS);
-        verify(calculator, new Times(1)).calculate(secret, Operation.DIV, buildNumber(4), buildNumber(2));
+        verify(calculator, new Times(1)).calculate(secret, operation, first, second);
         assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(String.valueOf(expectedResult));
     }
 
