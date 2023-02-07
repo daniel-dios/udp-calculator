@@ -1,5 +1,4 @@
 import client.Result;
-import client.ResultStatus;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;

@@ -1,10 +1,8 @@
 package client;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
 import shared.Operation;
-import utils.Builders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static utils.Builders.ip;
