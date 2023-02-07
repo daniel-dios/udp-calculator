@@ -27,10 +27,10 @@ public class ServerParameters {
     }
 
     public Secret getSecret() {
-        return null;
+        return this.secret;
     }
 
     public Port getPort() {
-        return null;
+        return this.port;
     }
 }

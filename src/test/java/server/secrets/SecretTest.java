@@ -1,7 +1,6 @@
-package server.service;
+package server.secrets;
 
 import org.junit.jupiter.api.Test;
-import server.secrets.Secret;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
