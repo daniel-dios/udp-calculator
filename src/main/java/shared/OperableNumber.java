@@ -48,6 +48,10 @@ public class OperableNumber {
         return new OperationResult(this.val * second.val);
     }
 
+    public OperationResult div(final OperableNumber second) {
+        return new OperationResult(this.val / second.val);
+    }
+
     @Override
     public String toString() {
         return String.format("[%d]", val);

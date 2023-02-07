@@ -14,7 +14,7 @@ public class CalculatorService {
             case MUL:
                 return first.mul(second);
             case DIV:
-                break;
+                return first.div(second);
         }
         return null;
     }
