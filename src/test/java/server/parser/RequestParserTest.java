@@ -1,6 +1,5 @@
 package server.parser;
 
-import shared.Operation;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import shared.OperableNumber;
+import shared.Operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

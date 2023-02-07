@@ -38,8 +38,8 @@ public class BlockingServer {
                 final var request = requestParser.parse(dp.getData());
                 if (request.isPresent()) {
                     final var result = calculator.calculate(request.get().operation(), request.get().first(), request.get().second());
-                    final var answer = secret.applyTo(result);
-                    final var sendPacket = new DatagramPacket(answer.asBytes(), answer.asBytes().length, dp.getAddress(), dp.getPort());
+                    final var secretWithResult = secret.applyTo(result);
+                    final var sendPacket = new DatagramPacket(secretWithResult.asBytes(), secretWithResult.asBytes().length, dp.getAddress(), dp.getPort());
                     serverSocket.send(sendPacket);
                 }
             } catch (IOException e) {

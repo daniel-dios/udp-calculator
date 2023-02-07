@@ -1,7 +1,7 @@
 package server.parser;
 
-import shared.Operation;
 import shared.OperableNumber;
+import shared.Operation;
 
 public class Request {
     private final Operation operation;

@@ -1,10 +1,10 @@
 package server.parser;
 
-import shared.Operation;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import shared.OperableNumber;
+import shared.Operation;
 
 public class RequestParser {
 

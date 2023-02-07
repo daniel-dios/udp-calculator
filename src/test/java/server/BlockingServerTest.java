@@ -8,23 +8,23 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
 import server.parser.Request;
 import server.parser.RequestParser;
 import server.service.CalculatorService;
 import shared.OperableNumber;
 import shared.Operation;
-import org.junit.jupiter.api.Test;
 import shared.OperationResult;
 import shared.Port;
 
-import static shared.Operation.MUL;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static shared.Operation.MUL;
 
 public class BlockingServerTest {
 
@@ -59,7 +59,7 @@ public class BlockingServerTest {
         final var first = buildNumber(4);
         final var second = buildNumber(2);
         final var operationAsText = "4:2";
-        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(expectedResult));
+        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(4/2));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = getPort("8080");
