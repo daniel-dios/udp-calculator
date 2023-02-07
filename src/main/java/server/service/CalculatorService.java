@@ -16,6 +16,6 @@ public class CalculatorService {
             case DIV:
                 return first.div(second);
         }
-        return null;
+        throw new RuntimeException("Unreachable code");
     }
 }

@@ -31,6 +31,18 @@ public class CalculatorServiceTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("getSumOperations")
+    void shouldSum(
+            final OperableNumber first,
+            final OperableNumber second,
+            final OperationResult expected
+    ) {
+        final var actual = new CalculatorService().calculate(SUM, first, second);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     public static Stream<Arguments> getSubsOperations() {
         return Stream.of(
                 of(number("1"), number("2"), result(1 - 2)),
@@ -44,6 +56,18 @@ public class CalculatorServiceTest {
                 of(number("3"), number("0"), result(3)),
                 of(number("1"), number("255"), result(1 - 255))
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getSubsOperations")
+    void shouldSubs(
+            final OperableNumber first,
+            final OperableNumber second,
+            final OperationResult expected
+    ) {
+        final var actual = new CalculatorService().calculate(SUBS, first, second);
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     public static Stream<Arguments> getMulOperations() {
@@ -61,6 +85,18 @@ public class CalculatorServiceTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("getMulOperations")
+    void shouldMul(
+            final OperableNumber first,
+            final OperableNumber second,
+            final OperationResult expected
+    ) {
+        final var actual = new CalculatorService().calculate(MUL, first, second);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     public static Stream<Arguments> getDivOperations() {
         return Stream.of(
                 of(number("1"), number("2"), result(0)),
@@ -73,42 +109,6 @@ public class CalculatorServiceTest {
                 of(number("6"), number("2"), result(3)),
                 of(number("255"), number("3"), result(85))
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("getSumOperations")
-    void shouldSum(
-            final OperableNumber first,
-            final OperableNumber second,
-            final OperationResult expected
-    ) {
-        final var actual = new CalculatorService().calculate(SUM, first, second);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("getSubsOperations")
-    void shouldSubs(
-            final OperableNumber first,
-            final OperableNumber second,
-            final OperationResult expected
-    ) {
-        final var actual = new CalculatorService().calculate(SUBS, first, second);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("getMulOperations")
-    void shouldMul(
-            final OperableNumber first,
-            final OperableNumber second,
-            final OperationResult expected
-    ) {
-        final var actual = new CalculatorService().calculate(MUL, first, second);
-
-        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
