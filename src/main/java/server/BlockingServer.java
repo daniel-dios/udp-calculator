@@ -34,7 +34,7 @@ public class BlockingServer {
                 final var dp = new DatagramPacket(receiveData, receiveData.length);
 
                 serverSocket.receive(dp);
-                System.out.printf("Received data %d bytes from %s %n", dp.getLength(), dp.getAddress());
+                System.out.printf("Received %d bytes from %s [%s] %n", dp.getLength(), dp.getAddress(), new String(dp.getData()).trim());
 
                 final var request = requestParser.parse(dp.getData());
                 if (request.isPresent()) {

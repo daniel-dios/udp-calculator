@@ -3,26 +3,25 @@ import client.ClientParameters;
 
 public class udpcli {
 
-    private static String answer;
-
-    public static String main(String[] args) {
+    public static void main(String[] args) {
         ClientParameters
                 .parse(args)
                 .ifPresentOrElse(
                         udpcli::sendRequest,
                         udpcli::printInstructions
                 );
-        return answer;
+    }
+
+    public static String sync(String[] args) {
+        return ClientParameters.parse(args)
+                .flatMap(Client::sendRequest)
+                .orElse("KO");
     }
 
     private static void sendRequest(final ClientParameters params) {
-        Client
-                .sendRequest(params)
+        Client.sendRequest(params)
                 .ifPresentOrElse(
-                        it -> {
-                            answer = it;
-                            System.out.println("El valor recibido es: " + it);
-                        },
+                        it -> System.out.println("El valor recibido es: " + it),
                         () -> System.out.println("No se recibe nada por el socket.")
                 );
     }
