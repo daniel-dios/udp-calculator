@@ -32,3 +32,8 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+    - name: Publish JUnit Test Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: build/test-results/test
