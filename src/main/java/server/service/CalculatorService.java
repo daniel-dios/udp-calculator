@@ -12,7 +12,7 @@ public class CalculatorService {
             case SUBS:
                 return first.minus(second);
             case MUL:
-                break;
+                return first.mul(second);
             case DIV:
                 break;
         }

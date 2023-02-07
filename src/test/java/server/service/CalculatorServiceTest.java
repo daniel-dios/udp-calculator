@@ -9,6 +9,7 @@ import shared.OperationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.of;
+import static shared.Operation.MUL;
 import static shared.Operation.SUBS;
 import static shared.Operation.SUM;
 
@@ -46,6 +47,22 @@ public class CalculatorServiceTest {
         );
     }
 
+    public static Stream<Arguments> getMulOperations() {
+        return Stream.of(
+                of(number("1"), number("2"), result(2)),
+                of(number("1"), number("2"), result(2)),
+                of(number("255"), number("0"), result(0)),
+                of(number("0"), number("23"), result(0)),
+                of(number("2"), number("23"), result(2 * 23)),
+                of(number("123"), number("255"), result(123 * 255)),
+                of(number("255"), number("255"), result(255 * 255)),
+                of(number("255"), number("2"), result(255 * 2)),
+                of(number("2"), number("2"), result(2 * 2)),
+                of(number("3"), number("0"), result(0)),
+                of(number("1"), number("255"), result(255))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("getSumOperations")
     void shouldSum(
@@ -66,6 +83,18 @@ public class CalculatorServiceTest {
             final OperationResult expected
     ) {
         final var actual = new CalculatorService().calculate(SUBS, first, second);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getMulOperations")
+    void shouldMul(
+            final OperableNumber first,
+            final OperableNumber second,
+            final OperationResult expected
+    ) {
+        final var actual = new CalculatorService().calculate(MUL, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
