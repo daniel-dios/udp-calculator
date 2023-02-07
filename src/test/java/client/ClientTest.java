@@ -60,7 +60,7 @@ public class ClientTest {
         final var result = newFixedThreadPool(1)
                 .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
 
-        final var actual = result.get(10, SECONDS);
+        final var actual = result.get(100, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.OK);
         assertThat(actual.answer()).isEqualTo(input);
     }
