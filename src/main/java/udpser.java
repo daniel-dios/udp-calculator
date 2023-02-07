@@ -22,9 +22,10 @@ public class udpser {
         System.out.println(
                 "\nEl formato correcto es: " +
                         "\nudpser <port_servidor> <secreto>" +
-                        "\n<port_servidor> debe ser un puerto UDP valido que no esté usado." +
-                        "\n<secreto> debe ser un valor entero entre 0 y 255." +
-                        "\n(Sin tildes intencionadamente)"
+                        "\n\t<port_servidor> debe ser un puerto UDP valido que no esté usado." +
+                        "\n\t<secreto> debe ser un valor entero entre 0 y 255." +
+                        "\nEjemplo:" +
+                        "\nudpser 8081 3"
         );
     }
 }

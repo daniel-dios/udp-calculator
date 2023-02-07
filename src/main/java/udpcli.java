@@ -1,5 +1,7 @@
 import client.Client;
 import client.ClientParameters;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class udpcli {
 
@@ -22,15 +24,25 @@ public class udpcli {
         Client.sendRequest(params)
                 .ifPresentOrElse(
                         it -> System.out.println("El valor recibido es: " + it),
-                        () -> System.out.println("No se recibe nada por el socket.")
+                        () -> System.out.println("No se recibe nada por el socket después de 10s.")
                 );
     }
 
     private static void printInstructions() {
-        System.out.println("Va sin tildes :( :");
-        System.out.println("El formato correcto es: udpcli <ip_address_servidor> <port_servidor> <numero> <simbolo> <numero>");
-        System.out.println("Los numeros deben ser valores enteros entre 0 y 255");
-        System.out.println("Los simbolos son: para suma, '+'; resta, '-'; multiplicacion 'x', 'X' o '*' y division ':' o '/'");
-        System.out.println("Para la division el segundo numero no podra ser 0.");
+        try {
+            System.out.println(
+                    "\nEl formato correcto es: " +
+                            "\nudpcli <ip_address_servidor> <port_servidor> <numero> <simbolo> <numero>" +
+                            "\n\t<ip_adress_servidor> debe ser la IP del servidor UDP." +
+                            "\n\t<port_servidor> debe ser el puerto del servidor UDP." +
+                            "\n\t<numero>> debe ser un entero entre 0 y 255." +
+                            "\n\t<simbolo> para suma, '+'; resta, '-'; multiplicacion 'x', 'X' o '*' y division ':' o '/'." +
+                            "\n" +
+                            "\nEjemplo:" +
+                            "\nudpcli " + InetAddress.getLocalHost().getHostAddress() + " 8081 1 x 2"
+            );
+        } catch (UnknownHostException e) {
+            // no op
+        }
     }
 }
