@@ -1,10 +1,5 @@
 package client.model;
 
-import client.model.ClientParameters;
-import client.model.IP;
-import client.model.OperableNumber;
-import client.model.OperationSymbol;
-import client.model.Port;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

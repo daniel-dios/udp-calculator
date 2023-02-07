@@ -14,6 +14,7 @@ import server.parser.RequestParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
 
+import static contract.GlobalConstants.KO;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +27,6 @@ import static server.Builders.port;
 import static server.Builders.result;
 import static server.OperationSymbol.DIV;
 import static server.OperationSymbol.MUL;
-import static contract.GlobalConstants.KO;
 
 public class BlockingServerTest {
 
