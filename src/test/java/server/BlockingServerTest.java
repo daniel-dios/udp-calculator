@@ -15,6 +15,7 @@ import server.secrets.Secret;
 import server.service.CalculatorService;
 
 import static contract.GlobalConstants.KO;
+import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,7 +49,10 @@ public class BlockingServerTest {
         final Port port = port("9000");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
-        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
+        final var updCall = newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return sendUDP(port.getValue(), operationAsText);
+        });
 
         updCall.get(30, SECONDS);
         verify(calculator, ONCE).calculate(operation, first, second);
@@ -70,7 +74,10 @@ public class BlockingServerTest {
         final var port = port("8080");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
-        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
+        final var updCall = newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return sendUDP(port.getValue(), operationAsText);
+        });
 
         final var answer = updCall.get(30, SECONDS);
         verify(calculator, ONCE).calculate(operation, first, second);
@@ -88,7 +95,10 @@ public class BlockingServerTest {
         final var port = port("8081");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
-        final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
+        final var updCall = newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return sendUDP(port.getValue(), operationAsText);
+        });
 
         final var answer = updCall.get(30, SECONDS);
         verify(calculator, NEVER).calculate(any(), any(), any());
