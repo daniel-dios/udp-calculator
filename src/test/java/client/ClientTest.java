@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static client.model.Builders.buildRequest;
-import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,38 +51,43 @@ public class ClientTest {
 
     @ParameterizedTest
     @MethodSource("calculateMinAndMax")
-    void shouldReceiveMessages(String input) throws UnknownHostException, InterruptedException {
+    void shouldReceiveMessages(String input) throws UnknownHostException, ExecutionException, InterruptedException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "1", "+", "2");
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
-        sleep(10000);
-        final var actual = Client.sendRequest(x, Duration.ofSeconds(10));
+        final var result = newFixedThreadPool(1)
+                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
 
+        final var actual = result.get(10, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.OK);
         assertThat(actual.answer()).isEqualTo(input);
     }
 
     @Test
-    void shouldHandleKO() throws UnknownHostException {
+    void shouldHandleKO() throws UnknownHostException, InterruptedException, ExecutionException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "1", "+", "2");
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, "KO"));
 
-        final var actual = Client.sendRequest(x, Duration.ofSeconds(10));
+        final var result = newFixedThreadPool(1)
+                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
 
+        final var actual = result.get(10, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.KO);
     }
 
     @Test
-    void shouldHandleTimeout() throws UnknownHostException {
+    void shouldHandleTimeout() throws UnknownHostException, ExecutionException, InterruptedException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "1", "+", "2");
 
-        final var actual = Client.sendRequest(x, Duration.ofSeconds(1));
+        final var result = newFixedThreadPool(1)
+                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(1)));
 
+        final var actual = result.get(10, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.TIMEOUT);
     }
 

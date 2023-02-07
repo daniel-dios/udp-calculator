@@ -26,11 +26,12 @@ public class GoldenTest {
     }
 
     @Test
-    void shouldUseServerManyTimes() throws UnknownHostException {
+    void shouldUseServerManyTimes() throws UnknownHostException, InterruptedException {
         final var hostAddress = InetAddress.getLocalHost().getHostAddress();
         final var port = String.valueOf(new Random().nextInt(1000) + 8000);
         newFixedThreadPool(1).submit(() -> udpser.main(new String[]{port, "11"}));
 
+        sleep(10000);
         final var strings = new HashMap<String[], String>();
         strings.put(new String[]{hostAddress, port, "3", "x", "2"}, "17");
         strings.put(new String[]{hostAddress, port, "1", "X", "2"}, "13");
