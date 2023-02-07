@@ -92,7 +92,7 @@ public class ClientTest {
 
     private static ClientParameters buildRequest(final int port, final String first, final String operation, final String second) throws UnknownHostException {
         return new ClientParameters(
-                IP.parse("127.0.0.1").get(),
+                new IP(InetAddress.getLocalHost()),
                 Port.parse(String.valueOf(port)).get(),
                 OperableNumber.parse(first).get(),
                 Operation.parse(operation).get(),
