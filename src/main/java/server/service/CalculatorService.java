@@ -1,8 +1,7 @@
 package server.service;
 
-import shared.OperableNumber;
-import shared.OperationSymbol;
-import shared.OperationResult;
+import server.OperableNumber;
+import server.OperationSymbol;
 
 public class CalculatorService {
 

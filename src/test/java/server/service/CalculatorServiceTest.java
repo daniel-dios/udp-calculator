@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import shared.OperableNumber;
-import shared.OperationResult;
+import server.OperableNumber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
-import static shared.OperationSymbol.DIV;
-import static shared.OperationSymbol.MUL;
-import static shared.OperationSymbol.SUBS;
-import static shared.OperationSymbol.SUM;
-import static utils.Builders.number;
-import static utils.Builders.result;
+import static server.Builders.number;
+import static server.Builders.result;
+import static server.OperationSymbol.DIV;
+import static server.OperationSymbol.MUL;
+import static server.OperationSymbol.SUBS;
+import static server.OperationSymbol.SUM;
 
 public class CalculatorServiceTest {
 

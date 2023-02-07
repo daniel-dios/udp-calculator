@@ -2,7 +2,6 @@ package server;
 
 import java.util.Optional;
 import server.secrets.Secret;
-import shared.Port;
 
 public class ServerParameters {
     private final Port port;

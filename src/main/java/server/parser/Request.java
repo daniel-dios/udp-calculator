@@ -1,7 +1,7 @@
 package server.parser;
 
-import shared.OperableNumber;
-import shared.OperationSymbol;
+import server.OperableNumber;
+import server.OperationSymbol;
 
 public class Request {
     private final OperationSymbol operationSymbol;

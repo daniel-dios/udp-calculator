@@ -1,9 +1,9 @@
-package shared;
+package server.service;
 
 public class OperationResult {
     private final int val;
 
-    OperationResult(final int val) {
+    public OperationResult(final int val) {
         this.val = val;
     }
 

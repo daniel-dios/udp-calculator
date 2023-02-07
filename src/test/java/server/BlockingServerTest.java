@@ -13,8 +13,6 @@ import server.parser.Request;
 import server.parser.RequestParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
-import shared.OperationSymbol;
-import utils.Builders;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -23,11 +21,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static shared.Constants.KO;
-import static shared.OperationSymbol.DIV;
-import static shared.OperationSymbol.MUL;
-import static utils.Builders.port;
-import static utils.Builders.result;
+import static server.Builders.number;
+import static server.Builders.port;
+import static server.Builders.result;
+import static server.OperationSymbol.DIV;
+import static server.OperationSymbol.MUL;
+import static contract.GlobalConstants.KO;
 
 public class BlockingServerTest {
 
@@ -41,12 +40,12 @@ public class BlockingServerTest {
         final var secret = new Secret(4);
         final var operationAsText = "3x2";
         final var operation = MUL;
-        final var first = Builders.number(3);
-        final var second = Builders.number(2);
+        final var first = number(3);
+        final var second = number(2);
         when(calculator.calculate(operation, first, second)).thenReturn(result(10));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
-        final var port = port("9000");
+        final Port port = port("9000");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
@@ -61,9 +60,9 @@ public class BlockingServerTest {
         final var parser = mock(RequestParser.class);
         final var secret = new Secret(5);
         final var expectedResult = 7;
-        final var operation = OperationSymbol.DIV;
-        final var first = Builders.number(4);
-        final var second = Builders.number(2);
+        final var operation = DIV;
+        final var first = number(4);
+        final var second = number(2);
         final var operationAsText = "4:2";
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         when(calculator.calculate(operation, first, second)).thenReturn(result(4 / 2));
@@ -102,8 +101,8 @@ public class BlockingServerTest {
         final var parser = mock(RequestParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4:0";
-        final var first = Builders.number(4);
-        final var second = Builders.number(0);
+        final var first = number(4);
+        final var second = number(0);
         final var operation = DIV;
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         when(calculator.calculate(operation, first, second)).thenThrow(new CalculatorService.CalculatorInputException("I can't divide by Zero"));

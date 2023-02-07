@@ -8,9 +8,8 @@ import server.parser.Request;
 import server.parser.RequestParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
-import shared.Port;
 
-import static shared.Constants.KO;
+import static contract.GlobalConstants.KO;
 
 public class BlockingServer {
 

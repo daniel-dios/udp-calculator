@@ -1,8 +1,8 @@
 package server.secrets;
 
 import java.util.Optional;
-import shared.NumberUtils;
-import shared.OperationResult;
+import server.NumberUtils;
+import server.service.OperationResult;
 
 public class Secret {
     private final int value;

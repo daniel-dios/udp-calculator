@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import shared.OperationSymbol;
-import utils.Builders;
+import server.OperationSymbol;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static server.Builders.number;
 
 public class RequestParserTest {
 
@@ -25,7 +25,7 @@ public class RequestParserTest {
                     }
                     list.add(Arguments.of(
                             String.format("%d%s%d", first, operation.symbol, second),
-                            new Request(operation, Builders.number(first), Builders.number(second))
+                            new Request(operation, number(first), number(second))
                     ));
                 }
             }
@@ -34,7 +34,7 @@ public class RequestParserTest {
         Arrays.stream(OperationSymbol.values()).forEach(operation -> {
             for (int first = 245; first <= 255; first++) {
                 for (int second = 245; second <= 255; second++) {
-                    final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, Builders.number(first), Builders.number(second)));
+                    final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, number(first), number(second)));
                     list.add(arguments);
                 }
             }

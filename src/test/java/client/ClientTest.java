@@ -16,13 +16,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static client.Builders.ip;
+import static client.Builders.number;
+import static client.Builders.operation;
+import static client.Builders.port;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static utils.Builders.ip;
-import static utils.Builders.number;
-import static utils.Builders.operation;
-import static utils.Builders.port;
 
 public class ClientTest {
 

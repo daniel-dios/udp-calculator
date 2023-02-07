@@ -1,4 +1,5 @@
-package shared;
+
+package server;
 
 import java.util.Optional;
 

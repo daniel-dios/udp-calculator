@@ -1,8 +1,8 @@
-package shared;
+package client;
 
 import java.util.Optional;
 
-public class Port {
+class Port {
     private final int val;
 
     Port(final int val) {

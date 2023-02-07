@@ -11,7 +11,7 @@ import java.time.Duration;
 import static client.Result.ko;
 import static client.Result.ok;
 import static client.Result.timeout;
-import static shared.Constants.isKO;
+import static contract.GlobalConstants.isKO;
 
 public class Client {
 

@@ -3,8 +3,8 @@ package server.parser;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import shared.OperableNumber;
-import shared.OperationSymbol;
+import server.OperableNumber;
+import server.OperationSymbol;
 
 public class RequestParser {
 

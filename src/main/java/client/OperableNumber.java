@@ -1,4 +1,4 @@
-package shared;
+package client;
 
 import java.util.Optional;
 
@@ -34,22 +34,6 @@ public class OperableNumber {
 
     public int getVal() {
         return val;
-    }
-
-    public OperationResult add(final OperableNumber second) {
-        return new OperationResult(this.val + second.val);
-    }
-
-    public OperationResult minus(final OperableNumber second) {
-        return new OperationResult(this.val - second.val);
-    }
-
-    public OperationResult mul(final OperableNumber second) {
-        return new OperationResult(this.val * second.val);
-    }
-
-    public OperationResult div(final OperableNumber second) {
-        return new OperationResult(this.val / second.val);
     }
 
     @Override

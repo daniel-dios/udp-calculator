@@ -1,10 +1,10 @@
 package server;
 
 import org.junit.jupiter.api.Test;
-import utils.Builders;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static utils.Builders.secret;
+import static server.Builders.port;
+import static server.Builders.secret;
 
 public class ServerParametersTest {
 
@@ -35,7 +35,7 @@ public class ServerParametersTest {
         final var parse = ServerParameters.parse(input);
 
         final var expected = new ServerParameters(
-                Builders.port(port),
+                port(port),
                 secret(secret)
         );
         assertThat(parse)

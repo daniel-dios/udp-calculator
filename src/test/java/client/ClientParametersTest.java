@@ -1,13 +1,11 @@
 package client;
 
-import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
-import shared.OperationSymbol;
 
+import static client.Builders.ip;
+import static client.Builders.number;
+import static client.Builders.port;
 import static org.assertj.core.api.Assertions.assertThat;
-import static utils.Builders.ip;
-import static utils.Builders.number;
-import static utils.Builders.port;
 
 public class ClientParametersTest {
 
@@ -47,7 +45,7 @@ public class ClientParametersTest {
     }
 
     @Test
-    void shouldReturnValid() throws UnknownHostException {
+    void shouldReturnValid() {
         final var port = "9000";
         final var first = "4";
         final var second = "5";

@@ -1,19 +1,18 @@
-package shared;
+package client;
 
 import java.util.Optional;
+import contract.GlobalConstants;
 
 public enum OperationSymbol {
-    SUM("+", "\\+"),
-    SUBS("-", "\\-"),
-    MUL("x", "x"),
-    DIV(":", "\\:");
+    SUM(GlobalConstants.SUM),
+    SUBS(GlobalConstants.SUBS),
+    MUL(GlobalConstants.MUL),
+    DIV(GlobalConstants.DIV);
 
     public final String symbol;
-    public final String regex;
 
-    OperationSymbol(final String symbol, final String regex) {
+    OperationSymbol(final String symbol) {
         this.symbol = symbol;
-        this.regex = regex;
     }
 
     @Override

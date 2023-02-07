@@ -2,9 +2,6 @@ package client;
 
 import java.net.InetAddress;
 import java.util.Optional;
-import shared.OperableNumber;
-import shared.OperationSymbol;
-import shared.Port;
 
 public class ClientParameters {
 
@@ -14,7 +11,13 @@ public class ClientParameters {
     private final OperationSymbol operationSymbol;
     private final OperableNumber second;
 
-    ClientParameters(final IP ip, final Port port, final OperableNumber first, final OperationSymbol operationSymbol, final OperableNumber second) {
+    ClientParameters(
+            final IP ip,
+            final Port port,
+            final OperableNumber first,
+            final OperationSymbol operationSymbol,
+            final OperableNumber second
+    ) {
         this.ip = ip;
         this.port = port;
         this.first = first;
