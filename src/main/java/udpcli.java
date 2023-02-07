@@ -41,11 +41,12 @@ public class udpcli {
                             "\nudpcli <ip_address_servidor> <port_servidor> <numero> <simbolo> <numero>" +
                             "\n\t<ip_adress_servidor> debe ser la IP del servidor UDP." +
                             "\n\t<port_servidor> debe ser el puerto del servidor UDP." +
-                            "\n\t<numero>> debe ser un entero entre 0 y 255." +
+                            "\n\t<numero>> debe ser un entero entre 0 y 255. Para division no es valido 0 en el segundo numero." +
                             "\n\t<simbolo> para suma, '+'; resta, '-'; multiplicacion 'x', 'X' o '*' y division ':' o '/'." +
                             "\n" +
                             "\nEjemplo:" +
-                            "\nudpcli " + InetAddress.getLocalHost().getHostAddress() + " 8081 1 x 2"
+                            "\nudpcli " + InetAddress.getLocalHost().getHostAddress() + " 8081 1 x 2" +
+                            "\njava udpcli " + InetAddress.getLocalHost().getHostAddress() + " 8081 1 x 2"
             );
         } catch (UnknownHostException e) {
             // no op
