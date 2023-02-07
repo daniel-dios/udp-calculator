@@ -1,6 +1,7 @@
 package server;
 
 import java.util.Optional;
+import shared.NumberUtils;
 
 public class Secret {
     private final int value;
@@ -10,16 +11,6 @@ public class Secret {
     }
 
     public static Optional<Secret> parse(final String arg) {
-        try {
-            final int number = Integer.parseInt(arg);
-            if (number < 0 || number > 255) {
-                System.out.println("Numb is out of [0, 255] range.");
-                return Optional.empty();
-            }
-            return Optional.of(new Secret(number));
-        } catch (NumberFormatException e) {
-            System.out.println("Numb is invalid.");
-            return Optional.empty();
-        }
+        return NumberUtils.validateRange(arg, 0, 255).map(Secret::new);
     }
 }
