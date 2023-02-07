@@ -1,10 +1,10 @@
 package server;
 
 import org.junit.jupiter.api.Test;
-import server.secrets.Secret;
-import shared.Port;
+import utils.Builders;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.Builders.secret;
 
 public class ServerParametersTest {
 
@@ -29,13 +29,14 @@ public class ServerParametersTest {
     @Test
     void shouldReturnValid() {
         final var port = "9000";
-        final var input = new String[]{port, "4"};
+        final var secret = "4";
+        final var input = new String[]{port, secret};
 
         final var parse = ServerParameters.parse(input);
 
         final var expected = new ServerParameters(
-                Port.parse(port).get(),
-                new Secret(4)
+                Builders.port(port),
+                secret(secret)
         );
         assertThat(parse)
                 .isNotEmpty()

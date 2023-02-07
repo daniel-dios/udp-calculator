@@ -15,6 +15,8 @@ import static shared.Operation.DIV;
 import static shared.Operation.MUL;
 import static shared.Operation.SUBS;
 import static shared.Operation.SUM;
+import static utils.Builders.number;
+import static utils.Builders.result;
 
 public class CalculatorServiceTest {
 
@@ -129,13 +131,5 @@ public class CalculatorServiceTest {
     void shouldThrowExceptionWhenDivByZero() {
         assertThatThrownBy(() -> new CalculatorService().calculate(DIV, number("1"), number("0")))
                 .isInstanceOf(CalculatorService.CalculatorInputException.class);
-    }
-
-    private static OperationResult result(final int value) {
-        return new OperationResult(value);
-    }
-
-    private static OperableNumber number(final String arg) {
-        return OperableNumber.parse(arg).get();
     }
 }

@@ -13,10 +13,8 @@ import server.parser.Request;
 import server.parser.RequestParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
-import shared.OperableNumber;
 import shared.Operation;
-import shared.OperationResult;
-import shared.Port;
+import utils.Builders;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -27,6 +25,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static shared.Operation.DIV;
 import static shared.Operation.MUL;
+import static utils.Builders.port;
+import static utils.Builders.result;
 
 public class BlockingServerTest {
 
@@ -40,12 +40,12 @@ public class BlockingServerTest {
         final var secret = new Secret(4);
         final var operationAsText = "3x2";
         final var operation = MUL;
-        final var first = buildNumber(3);
-        final var second = buildNumber(2);
-        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(10));
+        final var first = Builders.number(3);
+        final var second = Builders.number(2);
+        when(calculator.calculate(operation, first, second)).thenReturn(result(10));
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
-        final var port = getPort(String.valueOf(9000));
+        final var port = port("9000");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
@@ -61,13 +61,13 @@ public class BlockingServerTest {
         final var secret = new Secret(5);
         final var expectedResult = 7;
         final var operation = Operation.DIV;
-        final var first = buildNumber(4);
-        final var second = buildNumber(2);
+        final var first = Builders.number(4);
+        final var second = Builders.number(2);
         final var operationAsText = "4:2";
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
-        when(calculator.calculate(operation, first, second)).thenReturn(new OperationResult(4 / 2));
+        when(calculator.calculate(operation, first, second)).thenReturn(result(4 / 2));
         final var server = new BlockingServer(secret, parser, calculator);
-        final var port = getPort("8080");
+        final var port = port("8080");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
@@ -85,7 +85,7 @@ public class BlockingServerTest {
         final var operationAsText = "4asd2";
         when(parser.parse(any())).thenReturn(Optional.empty());
         final var server = new BlockingServer(secret, parser, calculator);
-        final var port = getPort("8081");
+        final var port = port("8081");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
@@ -101,13 +101,13 @@ public class BlockingServerTest {
         final var parser = mock(RequestParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4:0";
-        final var first = buildNumber(4);
-        final var second = buildNumber(0);
+        final var first = Builders.number(4);
+        final var second = Builders.number(0);
         final var operation = DIV;
         when(parser.parse(any())).thenReturn(Optional.of(new Request(operation, first, second)));
         when(calculator.calculate(operation, first, second)).thenThrow(new CalculatorService.CalculatorInputException("I can't divide by Zero"));
         final var server = new BlockingServer(secret, parser, calculator);
-        final var port = getPort("8082");
+        final var port = port("8082");
 
         newFixedThreadPool(1).submit(() -> server.startListeningForever(port));
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
@@ -129,13 +129,5 @@ public class BlockingServerTest {
             ds.receive(received);
             return Optional.of(new String(received.getData()).trim());
         }
-    }
-
-    private OperableNumber buildNumber(int number) {
-        return OperableNumber.parse(String.valueOf(number)).get();
-    }
-
-    private Port getPort(final String arg) {
-        return Port.parse(arg).get();
     }
 }

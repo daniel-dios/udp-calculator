@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import shared.OperableNumber;
 import shared.Operation;
+import utils.Builders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,8 +23,10 @@ public class RequestParserTest {
                     if (operation.equals(Operation.DIV) && second == 0) {
                         continue;
                     }
-                    final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, getNumber(first), getNumber(second)));
-                    list.add(arguments);
+                    list.add(Arguments.of(
+                            String.format("%d%s%d", first, operation.symbol, second),
+                            new Request(operation, Builders.number(first), Builders.number(second))
+                    ));
                 }
             }
         });
@@ -32,7 +34,7 @@ public class RequestParserTest {
         Arrays.stream(Operation.values()).forEach(operation -> {
             for (int first = 245; first <= 255; first++) {
                 for (int second = 245; second <= 255; second++) {
-                    final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, getNumber(first), getNumber(second)));
+                    final var arguments = Arguments.of(String.format("%d%s%d", first, operation.symbol, second), new Request(operation, Builders.number(first), Builders.number(second)));
                     list.add(arguments);
                 }
             }
@@ -95,9 +97,5 @@ public class RequestParserTest {
         final var actual = new RequestParser().parse(incoming);
 
         assertThat(actual).isEmpty();
-    }
-
-    private static OperableNumber getNumber(final int arg) {
-        return OperableNumber.parse(String.valueOf(arg)).get();
     }
 }

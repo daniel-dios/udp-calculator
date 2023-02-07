@@ -47,5 +47,4 @@ public class OperationTest {
                 .get()
                 .isEqualTo(DIV);
     }
-
 }

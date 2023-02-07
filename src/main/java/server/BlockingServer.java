@@ -82,7 +82,7 @@ public class BlockingServer {
     }
 
     private static class AnswerException extends RuntimeException {
-        private InetAddress address;
+        private final InetAddress address;
 
         public AnswerException(final IOException e, final InetAddress address) {
             super(e);

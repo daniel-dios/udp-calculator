@@ -3,8 +3,12 @@ package shared;
 public class OperationResult {
     private final int val;
 
-    public OperationResult(final int val) {
+    OperationResult(final int val) {
         this.val = val;
+    }
+
+    public static OperationResult parser(int val) {
+        return new OperationResult(val);
     }
 
     @Override
