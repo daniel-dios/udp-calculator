@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
@@ -17,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import shared.OperableNumber;
 import shared.Port;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientTest {
@@ -28,10 +29,10 @@ public class ClientTest {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "0", "x", "255");
         final Callable<String> task = () -> listen(port);
-        final var future = Executors.newFixedThreadPool(1)
+        final var future = newFixedThreadPool(1)
                 .submit(task);
 
-        Executors.newFixedThreadPool(1)
+        newFixedThreadPool(1)
                 .submit(() -> Client.sendRequest(x));
 
         final var receivedDataInServer = future.get(10, TimeUnit.SECONDS);
@@ -54,7 +55,7 @@ public class ClientTest {
     void shouldReceiveMessages(String input) throws UnknownHostException {
         final var port = new Random().nextInt(1000) + 8000;
         final var x = buildRequest(port, "1", "+", "2");
-        Executors.newFixedThreadPool(1)
+        newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
         final var actual = Client.sendRequest(x);
@@ -93,9 +94,9 @@ public class ClientTest {
         return new ClientParameters(
                 ip,
                 Port.parse(String.valueOf(port)).get(),
-                Numb.parse(first).get(),
+                OperableNumber.parse(first).get(),
                 Operation.parse(operation).get(),
-                Numb.parse(second).get()
+                OperableNumber.parse(second).get()
         );
     }
 

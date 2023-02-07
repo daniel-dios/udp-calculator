@@ -13,4 +13,19 @@ public class Secret {
     public static Optional<Secret> parse(final String arg) {
         return NumberUtils.validateRange(arg, 0, 255).map(Secret::new);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Secret secret = (Secret) o;
+
+        return value == secret.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
 }

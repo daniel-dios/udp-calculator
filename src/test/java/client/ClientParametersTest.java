@@ -3,6 +3,7 @@ package client;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
+import shared.OperableNumber;
 import shared.Port;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,9 +54,9 @@ public class ClientParametersTest {
         final var expected = new ClientParameters(
                 new IP(InetAddress.getByName("192.168.1.9")),
                 Port.parse("9000").get(),
-                new Numb(4),
+                buildNumb("4"),
                 Operation.SUM,
-                new Numb(5)
+                buildNumb("5")
         );
         assertThat(parse)
                 .isNotEmpty()
@@ -69,5 +70,9 @@ public class ClientParametersTest {
         final var input = new String[]{"192.168.1.9", "9000", "4", "/", "0"};
 
         assertThat(ClientParameters.parse(input)).isEmpty();
+    }
+
+    private OperableNumber buildNumb(final String arg) {
+        return OperableNumber.parse(arg).get();
     }
 }

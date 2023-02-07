@@ -27,7 +27,7 @@ public class ServerParametersTest {
 
     @Test
     void shouldReturnValid() {
-        final String port = "9000";
+        final var port = "9000";
         final var input = new String[]{port, "4"};
 
         final var parse = ServerParameters.parse(input);
