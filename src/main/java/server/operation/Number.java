@@ -2,7 +2,7 @@ package server.operation;
 
 import java.util.Optional;
 import server.NumberUtils;
-import server.service.OperationResult;
+import server.operation.resolver.OperationResult;
 
 public class Number {
     private final int val;

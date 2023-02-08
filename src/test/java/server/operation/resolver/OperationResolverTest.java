@@ -1,4 +1,4 @@
-package server.service;
+package server.operation.resolver;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -6,6 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import server.operation.Number;
+import server.operation.resolver.OperationResolver;
+import server.operation.resolver.OperationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,7 +19,7 @@ import static server.operation.Symbol.MUL;
 import static server.operation.Symbol.SUBS;
 import static server.operation.Symbol.SUM;
 
-public class OperationServiceTest {
+public class OperationResolverTest {
 
     public static Stream<Arguments> getSumOperations() {
         return Stream.of(
@@ -40,8 +42,8 @@ public class OperationServiceTest {
             final Number first,
             final Number second,
             final OperationResult expected
-    ) throws OperationService.CalculatorInputException {
-        final var actual = new OperationService().calculate(SUM, first, second);
+    ) throws OperationResolver.CalculatorInputException {
+        final var actual = new OperationResolver().compute(SUM, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -67,8 +69,8 @@ public class OperationServiceTest {
             final Number first,
             final Number second,
             final OperationResult expected
-    ) throws OperationService.CalculatorInputException {
-        final var actual = new OperationService().calculate(SUBS, first, second);
+    ) throws OperationResolver.CalculatorInputException {
+        final var actual = new OperationResolver().compute(SUBS, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -94,8 +96,8 @@ public class OperationServiceTest {
             final Number first,
             final Number second,
             final OperationResult expected
-    ) throws OperationService.CalculatorInputException {
-        final var actual = new OperationService().calculate(MUL, first, second);
+    ) throws OperationResolver.CalculatorInputException {
+        final var actual = new OperationResolver().compute(MUL, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -120,15 +122,15 @@ public class OperationServiceTest {
             final Number first,
             final Number second,
             final OperationResult expected
-    ) throws OperationService.CalculatorInputException {
-        final var actual = new OperationService().calculate(DIV, first, second);
+    ) throws OperationResolver.CalculatorInputException {
+        final var actual = new OperationResolver().compute(DIV, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     void shouldThrowExceptionWhenDivByZero() {
-        assertThatThrownBy(() -> new OperationService().calculate(DIV, number("1"), number("0")))
-                .isInstanceOf(OperationService.CalculatorInputException.class);
+        assertThatThrownBy(() -> new OperationResolver().compute(DIV, number("1"), number("0")))
+                .isInstanceOf(OperationResolver.CalculatorInputException.class);
     }
 }

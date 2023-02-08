@@ -12,7 +12,7 @@ import org.mockito.internal.verification.Times;
 import server.operation.Operation;
 import server.operation.OperationParser;
 import server.secrets.Secret;
-import server.service.OperationService;
+import server.operation.resolver.OperationResolver;
 
 import static contract.GlobalConstants.KO;
 import static java.lang.Thread.sleep;
@@ -35,15 +35,15 @@ public class BlockingServerTest {
     public static final Times NEVER = new Times(0);
 
     @Test
-    void shouldCallCalculatorService() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
-        final var calculator = mock(OperationService.class);
+    void shouldCallCalculatorService() throws ExecutionException, InterruptedException, TimeoutException, OperationResolver.CalculatorInputException {
+        final var calculator = mock(OperationResolver.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(4);
         final var operationAsText = "3x2";
         final var operation = MUL;
         final var first = number(3);
         final var second = number(2);
-        when(calculator.calculate(operation, first, second)).thenReturn(result(10));
+        when(calculator.compute(operation, first, second)).thenReturn(result(10));
         when(parser.parse(any())).thenReturn(Optional.of(new Operation(operation, first, second)));
         final var server = new BlockingServer(secret, parser, calculator);
         final Port port = port("9000");
@@ -55,12 +55,12 @@ public class BlockingServerTest {
         });
 
         updCall.get(30, SECONDS);
-        verify(calculator, ONCE).calculate(operation, first, second);
+        verify(calculator, ONCE).compute(operation, first, second);
     }
 
     @Test
-    void shouldAnswerProperly() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
-        final var calculator = mock(OperationService.class);
+    void shouldAnswerProperly() throws ExecutionException, InterruptedException, TimeoutException, OperationResolver.CalculatorInputException {
+        final var calculator = mock(OperationResolver.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(5);
         final var expectedResult = 7;
@@ -69,7 +69,7 @@ public class BlockingServerTest {
         final var second = number(2);
         final var operationAsText = "4:2";
         when(parser.parse(any())).thenReturn(Optional.of(new Operation(operation, first, second)));
-        when(calculator.calculate(operation, first, second)).thenReturn(result(4 / 2));
+        when(calculator.compute(operation, first, second)).thenReturn(result(4 / 2));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = port("8080");
 
@@ -80,13 +80,13 @@ public class BlockingServerTest {
         });
 
         final var answer = updCall.get(30, SECONDS);
-        verify(calculator, ONCE).calculate(operation, first, second);
+        verify(calculator, ONCE).compute(operation, first, second);
         assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(String.valueOf(expectedResult));
     }
 
     @Test
-    void shouldAnswerToWrongInputWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
-        final var calculator = mock(OperationService.class);
+    void shouldAnswerToWrongInputWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationResolver.CalculatorInputException {
+        final var calculator = mock(OperationResolver.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4asd2";
@@ -101,13 +101,13 @@ public class BlockingServerTest {
         });
 
         final var answer = updCall.get(30, SECONDS);
-        verify(calculator, NEVER).calculate(any(), any(), any());
+        verify(calculator, NEVER).compute(any(), any(), any());
         assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(KO);
     }
 
     @Test
-    void shouldAnswerToDivZeroWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
-        final var calculator = mock(OperationService.class);
+    void shouldAnswerToDivZeroWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationResolver.CalculatorInputException {
+        final var calculator = mock(OperationResolver.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4:0";
@@ -115,7 +115,7 @@ public class BlockingServerTest {
         final var second = number(0);
         final var operation = DIV;
         when(parser.parse(any())).thenReturn(Optional.of(new Operation(operation, first, second)));
-        when(calculator.calculate(operation, first, second)).thenThrow(new OperationService.CalculatorInputException("I can't divide by Zero"));
+        when(calculator.compute(operation, first, second)).thenThrow(new OperationResolver.CalculatorInputException("I can't divide by Zero"));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = port("8082");
 
@@ -123,7 +123,7 @@ public class BlockingServerTest {
         final var updCall = newFixedThreadPool(1).submit(() -> sendUDP(port.getValue(), operationAsText));
 
         final var answer = updCall.get(30, SECONDS);
-        verify(calculator, ONCE).calculate(operation, first, second);
+        verify(calculator, ONCE).compute(operation, first, second);
         assertThat(answer).isPresent().get().extracting(String::trim).isEqualTo(KO);
     }
 

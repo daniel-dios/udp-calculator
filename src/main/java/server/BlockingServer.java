@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import server.operation.Operation;
 import server.operation.OperationParser;
 import server.secrets.Secret;
-import server.service.OperationService;
+import server.operation.resolver.OperationResolver;
 
 import static contract.GlobalConstants.KO;
 
@@ -15,12 +15,12 @@ public class BlockingServer {
 
     private final Secret secret;
     private final OperationParser operationParser;
-    private final OperationService calculator;
+    private final OperationResolver calculator;
 
     public BlockingServer(
             final Secret secret,
             final OperationParser operationParser,
-            final OperationService calculator
+            final OperationResolver calculator
     ) {
         this.secret = secret;
         this.operationParser = operationParser;
@@ -77,13 +77,13 @@ public class BlockingServer {
     ) {
         System.out.printf("La operacion recibida de %s es %s %n", clientAddress, rq);
         try {
-            final var result = calculator.calculate(rq.operation(), rq.first(), rq.second());
+            final var result = calculator.compute(rq.operation(), rq.first(), rq.second());
             final var secretWithResult = secret.applyTo(result);
             System.out.printf("Enviando respuesta a %s %s -> val calculado %s + secreto %s, total: %s %n", clientAddress, rq, result, secret, secretWithResult);
             final var sendPacket = new DatagramPacket(secretWithResult.asBytes(), secretWithResult.asBytes().length, clientAddress, dp.getPort());
             serverSocket.send(sendPacket);
             System.out.printf("Respuesta enviada a %s %s -> %s %n", clientAddress, rq, secretWithResult);
-        } catch (OperationService.CalculatorInputException e) {
+        } catch (OperationResolver.CalculatorInputException e) {
             answerKO(serverSocket, dp, clientAddress);
         } catch (IOException e) {
             throw new AnswerException(e, dp.getAddress());

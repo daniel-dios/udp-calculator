@@ -2,7 +2,7 @@ package server;
 
 import server.operation.Number;
 import server.secrets.Secret;
-import server.service.OperationResult;
+import server.operation.resolver.OperationResult;
 
 public class Builders {
 

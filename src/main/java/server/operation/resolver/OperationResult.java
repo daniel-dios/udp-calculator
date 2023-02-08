@@ -1,4 +1,4 @@
-package server.service;
+package server.operation.resolver;
 
 public class OperationResult {
     private final int val;
