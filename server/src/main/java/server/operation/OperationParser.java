@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static server.operation.Symbol.DIV;
+
 public class OperationParser {
 
     public Optional<Operation> parse(final byte[] receivedText) {
@@ -29,6 +31,12 @@ public class OperationParser {
             System.out.printf("Numbers %s are not valid.%n", Arrays.stream(numbers).collect(Collectors.toList()));
             return Optional.empty();
         }
+
+        if (second.get().isZero() && op.get().equals(DIV)) {
+            System.out.println("I can't dive by 0.");
+            return Optional.empty();
+        }
+
         return Optional.of(new Operation(op.get(), first.get(), second.get()));
     }
 }

@@ -20,10 +20,8 @@ public class Client {
     public static ServerResponse sendRequest(Parameters params, final Duration timeout) {
         try (final var ds = new DatagramSocket()) {
             ds.setSoTimeout((int) timeout.toMillis());
-            final var send = params.toRequest();
-            final var datagramPacket = new DatagramPacket(send, send.length, params.address(), params.port());
 
-            ds.send(datagramPacket);
+            ds.send(params.toDatagramPacket());
 
             final var received = new DatagramPacket(new byte[5], 5); // -255 to 65280 are 5 characters as max.
             ds.receive(received);

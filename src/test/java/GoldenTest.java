@@ -18,7 +18,7 @@ public class GoldenTest {
         newFixedThreadPool(1).submit(() -> udpser.main(new String[]{port, "1"}));
 
         sleep(10000);
-        final var actual = udpcli.sync(new String[]{hostAddress, port, "3", "x", "2"});
+        final var actual = udpcli.sync(new String[]{hostAddress, port, "3x2"});
         assertThat(actual)
                 .isPresent()
                 .get()
@@ -33,16 +33,12 @@ public class GoldenTest {
 
         sleep(10000);
         final var strings = new HashMap<String[], String>();
-        strings.put(new String[]{hostAddress, port, "3", "x", "2"}, "17");
-        strings.put(new String[]{hostAddress, port, "1", "X", "2"}, "13");
-        strings.put(new String[]{hostAddress, port, "2", "*", "2"}, "15");
-        strings.put(new String[]{hostAddress, port, "255", "*", "255"}, "65036");
-        strings.put(new String[]{hostAddress, port, "2", "+", "3"}, "16");
-        strings.put(new String[]{hostAddress, port, "2", "-", "3"}, "10");
-        strings.put(new String[]{hostAddress, port, "255", "-", "255"}, "11");
-        strings.put(new String[]{hostAddress, port, "255", "/", "255"}, "12");
-        strings.put(new String[]{hostAddress, port, "255", ":", "254"}, "12");
-        strings.put(new String[]{hostAddress, port, "1", ":", "255"}, "11");
+        strings.put(new String[]{hostAddress, port, "3x2"       }, "17");
+        strings.put(new String[]{hostAddress, port, "2+3"       }, "16");
+        strings.put(new String[]{hostAddress, port, "2-3"       }, "10");
+        strings.put(new String[]{hostAddress, port, "255-255"   }, "11");
+        strings.put(new String[]{hostAddress, port, "255:254"   }, "12");
+        strings.put(new String[]{hostAddress, port, "1:255"     }, "11");
 
         strings.forEach((key, value) -> assertThat(udpcli.sync(key))
                 .isPresent()

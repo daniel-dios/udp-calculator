@@ -27,7 +27,7 @@ public class ClientTest {
     @Test
     void shouldSendMessages() throws ExecutionException, InterruptedException, TimeoutException, UnknownHostException {
         final var port = new Random().nextInt(1000) + 8000;
-        final var x = buildRequest(port, "0", "x", "255");
+        final var x = buildRequest(port, "0x255");
         final Callable<String> task = () -> serverAnswers(port, "OK");
         final var future = newFixedThreadPool(1)
                 .submit(task);
@@ -56,7 +56,7 @@ public class ClientTest {
     @MethodSource("calculateMinAndMax")
     void shouldReceiveMessages(String input) throws UnknownHostException, ExecutionException, InterruptedException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
-        final var x = buildRequest(port, "1", "+", "2");
+        final var x = buildRequest(port, "1+2");
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
@@ -73,7 +73,7 @@ public class ClientTest {
     @Test
     void shouldHandleKO() throws UnknownHostException, InterruptedException, ExecutionException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
-        final var x = buildRequest(port, "1", "+", "2");
+        final var x = buildRequest(port, "1+2");
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, "KO"));
 
@@ -89,7 +89,7 @@ public class ClientTest {
     @Test
     void shouldHandleTimeout() throws UnknownHostException, ExecutionException, InterruptedException, TimeoutException {
         final var port = new Random().nextInt(1000) + 8000;
-        final var x = buildRequest(port, "1", "+", "2");
+        final var x = buildRequest(port, "1+2");
 
         final var result = newFixedThreadPool(1)
                 .submit(() -> Client.sendRequest(x, Duration.ofSeconds(1)));

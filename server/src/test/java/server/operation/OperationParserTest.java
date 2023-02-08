@@ -91,7 +91,7 @@ public class OperationParserTest {
 
     @Test
     void shouldReturnEmptyWhenDivZero() {
-        final var incoming = ByteBuffer.allocate(7).put("1/0".getBytes()).array();
+        final var incoming = ByteBuffer.allocate(7).put("1:0".getBytes()).array();
 
         final var actual = new OperationParser().parse(incoming);
 
