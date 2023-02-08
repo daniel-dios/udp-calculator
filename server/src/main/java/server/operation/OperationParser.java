@@ -2,7 +2,6 @@ package server.operation;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static server.operation.Symbol.DIV;
 
@@ -28,7 +27,6 @@ public class OperationParser {
         final var first = Number.parse(numbers[0]);
         final var second = Number.parse(numbers[1]);
         if (first.isEmpty() || second.isEmpty()) {
-            System.out.printf("Numbers %s are not valid.%n", Arrays.stream(numbers).collect(Collectors.toList()));
             return Optional.empty();
         }
 

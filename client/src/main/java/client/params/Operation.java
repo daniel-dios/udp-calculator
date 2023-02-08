@@ -2,7 +2,6 @@ package client.params;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static client.params.OperationSymbol.DIV;
 
@@ -37,7 +36,6 @@ public class Operation {
         final var first = InputNumber.parse(numbers[0]);
         final var second = InputNumber.parse(numbers[1]);
         if (first.isEmpty() || second.isEmpty()) {
-            System.out.printf("Numbers %s are not valid.%n", Arrays.stream(numbers).collect(Collectors.toList()));
             return Optional.empty();
         }
         if (second.get().isZero() && op.get().equals(DIV)) {
