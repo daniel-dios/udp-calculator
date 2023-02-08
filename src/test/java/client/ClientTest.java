@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static client.model.Builders.buildRequest;
+import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,8 +32,10 @@ public class ClientTest {
         final var future = newFixedThreadPool(1)
                 .submit(task);
 
-        newFixedThreadPool(1)
-                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
+        newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return Client.sendRequest(x, Duration.ofSeconds(10));
+        });
 
         final var receivedDataInServer = future.get(10, SECONDS);
         assertThat(receivedDataInServer)
@@ -57,8 +60,10 @@ public class ClientTest {
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, input));
 
-        final var result = newFixedThreadPool(1)
-                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
+        final var result = newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return Client.sendRequest(x, Duration.ofSeconds(10));
+        });
 
         final var actual = result.get(100, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.OK);
@@ -72,8 +77,10 @@ public class ClientTest {
         newFixedThreadPool(1)
                 .submit(() -> serverAnswers(port, "KO"));
 
-        final var result = newFixedThreadPool(1)
-                .submit(() -> Client.sendRequest(x, Duration.ofSeconds(10)));
+        final var result = newFixedThreadPool(1).submit(() -> {
+            sleep(5000);
+            return Client.sendRequest(x, Duration.ofSeconds(10));
+        });
 
         final var actual = result.get(10, SECONDS);
         assertThat(actual.status).isEqualTo(ResultStatus.KO);
