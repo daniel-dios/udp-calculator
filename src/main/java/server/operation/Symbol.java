@@ -1,8 +1,8 @@
-package server;
+package server.operation;
 
 import contract.GlobalConstants;
 
-public enum OperationSymbol {
+public enum Symbol {
     SUM(GlobalConstants.SUM, "\\" + GlobalConstants.SUM),
     SUBS(GlobalConstants.SUBS, "\\" + GlobalConstants.SUBS),
     MUL(GlobalConstants.MUL, GlobalConstants.MUL),
@@ -11,7 +11,7 @@ public enum OperationSymbol {
     public final String symbol;
     public final String regex;
 
-    OperationSymbol(final String symbol, final String regex) {
+    Symbol(final String symbol, final String regex) {
         this.symbol = symbol;
         this.regex = regex;
     }

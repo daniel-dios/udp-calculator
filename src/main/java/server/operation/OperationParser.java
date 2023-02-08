@@ -1,16 +1,14 @@
-package server.parser;
+package server.operation;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import server.OperableNumber;
-import server.OperationSymbol;
 
-public class RequestParser {
+public class OperationParser {
 
-    public Optional<Request> parse(final byte[] receivedText) {
+    public Optional<Operation> parse(final byte[] receivedText) {
         final var trim = new String(receivedText).trim();
-        final var op = Arrays.stream(OperationSymbol.values())
+        final var op = Arrays.stream(Symbol.values())
                 .filter(it -> trim.contains(it.symbol))
                 .findFirst();
 
@@ -25,12 +23,12 @@ public class RequestParser {
             return Optional.empty();
         }
 
-        final var first = OperableNumber.parse(numbers[0]);
-        final var second = OperableNumber.parse(numbers[1]);
+        final var first = Number.parse(numbers[0]);
+        final var second = Number.parse(numbers[1]);
         if (first.isEmpty() || second.isEmpty()) {
             System.out.printf("Numbers %s are not valid.%n", Arrays.stream(numbers).collect(Collectors.toList()));
             return Optional.empty();
         }
-        return Optional.of(new Request(op.get(), first.get(), second.get()));
+        return Optional.of(new Operation(op.get(), first.get(), second.get()));
     }
 }

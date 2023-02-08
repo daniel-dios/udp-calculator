@@ -4,26 +4,26 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import server.parser.Request;
-import server.parser.RequestParser;
+import server.operation.Operation;
+import server.operation.OperationParser;
 import server.secrets.Secret;
-import server.service.CalculatorService;
+import server.operation.resolver.OperationResolver;
 
 import static contract.GlobalConstants.KO;
 
 public class BlockingServer {
 
     private final Secret secret;
-    private final RequestParser requestParser;
-    private final CalculatorService calculator;
+    private final OperationParser operationParser;
+    private final OperationResolver calculator;
 
     public BlockingServer(
             final Secret secret,
-            final RequestParser requestParser,
-            final CalculatorService calculator
+            final OperationParser operationParser,
+            final OperationResolver calculator
     ) {
         this.secret = secret;
-        this.requestParser = requestParser;
+        this.operationParser = operationParser;
         this.calculator = calculator;
     }
 
@@ -44,7 +44,7 @@ public class BlockingServer {
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.printf("Received %d bytes from %s %n", dp.getLength(), clientAddress);
 
-                requestParser
+                operationParser
                         .parse(dp.getData())
                         .ifPresentOrElse(
                                 it -> answerLogic(socket, dp, clientAddress, it),
@@ -73,17 +73,17 @@ public class BlockingServer {
             final DatagramSocket serverSocket,
             final DatagramPacket dp,
             final InetAddress clientAddress,
-            final Request rq
+            final Operation rq
     ) {
         System.out.printf("La operacion recibida de %s es %s %n", clientAddress, rq);
         try {
-            final var result = calculator.calculate(rq.operation(), rq.first(), rq.second());
+            final var result = calculator.compute(rq.operation(), rq.first(), rq.second());
             final var secretWithResult = secret.applyTo(result);
             System.out.printf("Enviando respuesta a %s %s -> val calculado %s + secreto %s, total: %s %n", clientAddress, rq, result, secret, secretWithResult);
             final var sendPacket = new DatagramPacket(secretWithResult.asBytes(), secretWithResult.asBytes().length, clientAddress, dp.getPort());
             serverSocket.send(sendPacket);
             System.out.printf("Respuesta enviada a %s %s -> %s %n", clientAddress, rq, secretWithResult);
-        } catch (CalculatorService.CalculatorInputException e) {
+        } catch (OperationResolver.CalculatorInputException e) {
             answerKO(serverSocket, dp, clientAddress);
         } catch (IOException e) {
             throw new AnswerException(e, dp.getAddress());

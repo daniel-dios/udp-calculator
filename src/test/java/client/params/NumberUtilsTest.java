@@ -1,4 +1,4 @@
-package client.model;
+package client.params;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

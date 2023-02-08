@@ -2,7 +2,7 @@ package server.secrets;
 
 import java.util.Optional;
 import server.NumberUtils;
-import server.service.OperationResult;
+import server.operation.resolver.OperationResult;
 
 public class Secret {
     private final int value;

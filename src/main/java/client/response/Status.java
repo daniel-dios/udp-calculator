@@ -1,5 +1,5 @@
 package client.response;
 
-public enum ResultStatus {
+public enum Status {
     OK, KO, TIMEOUT;
 }
