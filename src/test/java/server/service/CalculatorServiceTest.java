@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import server.OperableNumber;
+import server.Number;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
 import static server.Builders.number;
 import static server.Builders.result;
-import static server.OperationSymbol.DIV;
-import static server.OperationSymbol.MUL;
-import static server.OperationSymbol.SUBS;
-import static server.OperationSymbol.SUM;
+import static server.Symbol.DIV;
+import static server.Symbol.MUL;
+import static server.Symbol.SUBS;
+import static server.Symbol.SUM;
 
 public class CalculatorServiceTest {
 
@@ -37,8 +37,8 @@ public class CalculatorServiceTest {
     @ParameterizedTest
     @MethodSource("getSumOperations")
     void shouldSum(
-            final OperableNumber first,
-            final OperableNumber second,
+            final Number first,
+            final Number second,
             final OperationResult expected
     ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(SUM, first, second);
@@ -64,8 +64,8 @@ public class CalculatorServiceTest {
     @ParameterizedTest
     @MethodSource("getSubsOperations")
     void shouldSubs(
-            final OperableNumber first,
-            final OperableNumber second,
+            final Number first,
+            final Number second,
             final OperationResult expected
     ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(SUBS, first, second);
@@ -91,8 +91,8 @@ public class CalculatorServiceTest {
     @ParameterizedTest
     @MethodSource("getMulOperations")
     void shouldMul(
-            final OperableNumber first,
-            final OperableNumber second,
+            final Number first,
+            final Number second,
             final OperationResult expected
     ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(MUL, first, second);
@@ -117,8 +117,8 @@ public class CalculatorServiceTest {
     @ParameterizedTest
     @MethodSource("getDivOperations")
     void shouldDiv(
-            final OperableNumber first,
-            final OperableNumber second,
+            final Number first,
+            final Number second,
             final OperationResult expected
     ) throws CalculatorService.CalculatorInputException {
         final var actual = new CalculatorService().calculate(DIV, first, second);

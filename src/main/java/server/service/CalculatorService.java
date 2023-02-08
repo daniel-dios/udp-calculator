@@ -1,14 +1,14 @@
 package server.service;
 
-import server.OperableNumber;
-import server.OperationSymbol;
+import server.Number;
+import server.Symbol;
 
 public class CalculatorService {
 
     public static final CalculatorInputException CALCULATOR_INPUT_EXCEPTION = new CalculatorInputException("I can't divide by Zero");
 
-    public OperationResult calculate(final OperationSymbol operationSymbol, final OperableNumber first, final OperableNumber second) throws CalculatorInputException {
-        switch (operationSymbol) {
+    public OperationResult calculate(final Symbol symbol, final Number first, final Number second) throws CalculatorInputException {
+        switch (symbol) {
             case SUM:
                 return first.add(second);
             case SUBS:

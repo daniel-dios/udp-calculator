@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import server.parser.Request;
-import server.parser.RequestParser;
+import server.parser.Operation;
+import server.parser.OperationParser;
 import server.secrets.Secret;
 import server.service.CalculatorService;
 
@@ -14,16 +14,16 @@ import static contract.GlobalConstants.KO;
 public class BlockingServer {
 
     private final Secret secret;
-    private final RequestParser requestParser;
+    private final OperationParser operationParser;
     private final CalculatorService calculator;
 
     public BlockingServer(
             final Secret secret,
-            final RequestParser requestParser,
+            final OperationParser operationParser,
             final CalculatorService calculator
     ) {
         this.secret = secret;
-        this.requestParser = requestParser;
+        this.operationParser = operationParser;
         this.calculator = calculator;
     }
 
@@ -44,7 +44,7 @@ public class BlockingServer {
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.printf("Received %d bytes from %s %n", dp.getLength(), clientAddress);
 
-                requestParser
+                operationParser
                         .parse(dp.getData())
                         .ifPresentOrElse(
                                 it -> answerLogic(socket, dp, clientAddress, it),
@@ -73,7 +73,7 @@ public class BlockingServer {
             final DatagramSocket serverSocket,
             final DatagramPacket dp,
             final InetAddress clientAddress,
-            final Request rq
+            final Operation rq
     ) {
         System.out.printf("La operacion recibida de %s es %s %n", clientAddress, rq);
         try {

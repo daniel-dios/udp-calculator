@@ -17,12 +17,12 @@ public class Builders {
         return Port.parse(String.valueOf(port)).get();
     }
 
-    public static OperableNumber number(int number) {
-        return OperableNumber.parse(String.valueOf(number)).get();
+    public static Number number(int number) {
+        return Number.parse(String.valueOf(number)).get();
     }
 
-    public static OperableNumber number(final String s) {
-        return OperableNumber.parse(s).get();
+    public static Number number(final String s) {
+        return Number.parse(s).get();
     }
 
     public static Secret secret(final String secret) {
