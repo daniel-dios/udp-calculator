@@ -1,4 +1,4 @@
-package server.parser;
+package server.operation;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import server.Symbol;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static server.Builders.number;

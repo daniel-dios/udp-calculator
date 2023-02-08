@@ -1,4 +1,4 @@
-package client.model;
+package client.params;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

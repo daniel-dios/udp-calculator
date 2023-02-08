@@ -1,4 +1,4 @@
-package client.model;
+package client.params;
 
 import contract.GlobalConstants;
 import java.util.Optional;

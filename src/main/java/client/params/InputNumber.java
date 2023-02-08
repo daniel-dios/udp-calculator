@@ -1,16 +1,16 @@
-package client.model;
+package client.params;
 
 import java.util.Optional;
 
-public class OperableNumber {
+public class InputNumber {
     private final int val;
 
-    OperableNumber(final int val) {
+    InputNumber(final int val) {
         this.val = val;
     }
 
-    static Optional<OperableNumber> parse(final String arg) {
-        return NumberUtils.validateRange(arg, 0, 255).map(OperableNumber::new);
+    static Optional<InputNumber> parse(final String arg) {
+        return NumberUtils.validateRange(arg, 0, 255).map(InputNumber::new);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class OperableNumber {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final OperableNumber that = (OperableNumber) o;
+        final InputNumber that = (InputNumber) o;
 
         return val == that.val;
     }

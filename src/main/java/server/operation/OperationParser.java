@@ -1,10 +1,8 @@
-package server.parser;
+package server.operation;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import server.Number;
-import server.Symbol;
 
 public class OperationParser {
 

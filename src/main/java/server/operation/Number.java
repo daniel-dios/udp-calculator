@@ -1,6 +1,7 @@
-package server;
+package server.operation;
 
 import java.util.Optional;
+import server.NumberUtils;
 import server.service.OperationResult;
 
 public class Number {

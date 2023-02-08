@@ -1,6 +1,6 @@
 import client.Client;
-import client.model.ClientParameters;
-import client.response.Result;
+import client.params.Parameters;
+import client.response.ServerResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -11,7 +11,7 @@ public class udpcli {
     public static final Duration TIMEOUT = Duration.ofSeconds(10);
 
     public static void main(String[] args) {
-        ClientParameters
+        Parameters
                 .parse(args)
                 .ifPresentOrElse(
                         udpcli::sendRequest,
@@ -19,12 +19,12 @@ public class udpcli {
                 );
     }
 
-    public static Optional<Result> sync(String[] args) {
-        return ClientParameters.parse(args)
+    public static Optional<ServerResponse> sync(String[] args) {
+        return Parameters.parse(args)
                 .map(params -> Client.sendRequest(params, TIMEOUT));
     }
 
-    private static void sendRequest(final ClientParameters params) {
+    private static void sendRequest(final Parameters params) {
         final var result = Client.sendRequest(params, TIMEOUT);
         switch (result.status) {
             case OK:

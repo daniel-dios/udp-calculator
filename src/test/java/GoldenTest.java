@@ -1,4 +1,4 @@
-import client.response.Result;
+import client.response.ServerResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class GoldenTest {
         assertThat(actual)
                 .isPresent()
                 .get()
-                .isEqualTo(Result.ok("7"));
+                .isEqualTo(ServerResponse.ok("7"));
     }
 
     @Test
@@ -48,6 +48,6 @@ public class GoldenTest {
                 .isPresent()
                 .get()
                 .usingRecursiveComparison()
-                .isEqualTo(Result.ok(value)));
+                .isEqualTo(ServerResponse.ok(value)));
     }
 }

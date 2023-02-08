@@ -1,7 +1,4 @@
-package server.parser;
-
-import server.Number;
-import server.Symbol;
+package server.operation;
 
 public class Operation {
     private final Symbol symbol;

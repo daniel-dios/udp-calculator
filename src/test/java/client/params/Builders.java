@@ -1,4 +1,4 @@
-package client.model;
+package client.params;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,20 +17,20 @@ public class Builders {
         return OperationSymbol.parse(operation).get();
     }
 
-    public static OperableNumber number(int number) {
-        return OperableNumber.parse(String.valueOf(number)).get();
+    public static InputNumber number(int number) {
+        return InputNumber.parse(String.valueOf(number)).get();
     }
 
-    public static OperableNumber number(final String s) {
-        return OperableNumber.parse(s).get();
+    public static InputNumber number(final String s) {
+        return InputNumber.parse(s).get();
     }
 
     public static IP ip(final String s) {
         return IP.parse(s).get();
     }
 
-    public static ClientParameters buildRequest(final int port, final String first, final String operation, final String second) throws UnknownHostException {
-        return new ClientParameters(
+    public static Parameters buildRequest(final int port, final String first, final String operation, final String second) throws UnknownHostException {
+        return new Parameters(
                 ip(InetAddress.getLocalHost().getHostAddress()),
                 port(port),
                 number(first),

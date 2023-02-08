@@ -1,6 +1,6 @@
 package client;
 
-import client.response.ResultStatus;
+import client.response.Status;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static client.model.Builders.buildRequest;
+import static client.params.Builders.buildRequest;
 import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -66,7 +66,7 @@ public class ClientTest {
         });
 
         final var actual = result.get(100, SECONDS);
-        assertThat(actual.status).isEqualTo(ResultStatus.OK);
+        assertThat(actual.status).isEqualTo(Status.OK);
         assertThat(actual.answer()).isEqualTo(input);
     }
 
@@ -83,7 +83,7 @@ public class ClientTest {
         });
 
         final var actual = result.get(10, SECONDS);
-        assertThat(actual.status).isEqualTo(ResultStatus.KO);
+        assertThat(actual.status).isEqualTo(Status.KO);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ClientTest {
                 .submit(() -> Client.sendRequest(x, Duration.ofSeconds(1)));
 
         final var actual = result.get(10, SECONDS);
-        assertThat(actual.status).isEqualTo(ResultStatus.TIMEOUT);
+        assertThat(actual.status).isEqualTo(Status.TIMEOUT);
     }
 
     private String serverAnswers(final int port, final String s) {

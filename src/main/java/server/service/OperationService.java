@@ -1,9 +1,9 @@
 package server.service;
 
-import server.Number;
-import server.Symbol;
+import server.operation.Number;
+import server.operation.Symbol;
 
-public class CalculatorService {
+public class OperationService {
 
     public static final CalculatorInputException CALCULATOR_INPUT_EXCEPTION = new CalculatorInputException("I can't divide by Zero");
 

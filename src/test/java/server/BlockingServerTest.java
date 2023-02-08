@@ -9,10 +9,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
-import server.parser.Operation;
-import server.parser.OperationParser;
+import server.operation.Operation;
+import server.operation.OperationParser;
 import server.secrets.Secret;
-import server.service.CalculatorService;
+import server.service.OperationService;
 
 import static contract.GlobalConstants.KO;
 import static java.lang.Thread.sleep;
@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
 import static server.Builders.number;
 import static server.Builders.port;
 import static server.Builders.result;
-import static server.Symbol.DIV;
-import static server.Symbol.MUL;
+import static server.operation.Symbol.DIV;
+import static server.operation.Symbol.MUL;
 
 public class BlockingServerTest {
 
@@ -35,8 +35,8 @@ public class BlockingServerTest {
     public static final Times NEVER = new Times(0);
 
     @Test
-    void shouldCallCalculatorService() throws ExecutionException, InterruptedException, TimeoutException, CalculatorService.CalculatorInputException {
-        final var calculator = mock(CalculatorService.class);
+    void shouldCallCalculatorService() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
+        final var calculator = mock(OperationService.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(4);
         final var operationAsText = "3x2";
@@ -59,8 +59,8 @@ public class BlockingServerTest {
     }
 
     @Test
-    void shouldAnswerProperly() throws ExecutionException, InterruptedException, TimeoutException, CalculatorService.CalculatorInputException {
-        final var calculator = mock(CalculatorService.class);
+    void shouldAnswerProperly() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
+        final var calculator = mock(OperationService.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(5);
         final var expectedResult = 7;
@@ -85,8 +85,8 @@ public class BlockingServerTest {
     }
 
     @Test
-    void shouldAnswerToWrongInputWithKO() throws ExecutionException, InterruptedException, TimeoutException, CalculatorService.CalculatorInputException {
-        final var calculator = mock(CalculatorService.class);
+    void shouldAnswerToWrongInputWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
+        final var calculator = mock(OperationService.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4asd2";
@@ -106,8 +106,8 @@ public class BlockingServerTest {
     }
 
     @Test
-    void shouldAnswerToDivZeroWithKO() throws ExecutionException, InterruptedException, TimeoutException, CalculatorService.CalculatorInputException {
-        final var calculator = mock(CalculatorService.class);
+    void shouldAnswerToDivZeroWithKO() throws ExecutionException, InterruptedException, TimeoutException, OperationService.CalculatorInputException {
+        final var calculator = mock(OperationService.class);
         final var parser = mock(OperationParser.class);
         final var secret = new Secret(6);
         final var operationAsText = "4:0";
@@ -115,7 +115,7 @@ public class BlockingServerTest {
         final var second = number(0);
         final var operation = DIV;
         when(parser.parse(any())).thenReturn(Optional.of(new Operation(operation, first, second)));
-        when(calculator.calculate(operation, first, second)).thenThrow(new CalculatorService.CalculatorInputException("I can't divide by Zero"));
+        when(calculator.calculate(operation, first, second)).thenThrow(new OperationService.CalculatorInputException("I can't divide by Zero"));
         final var server = new BlockingServer(secret, parser, calculator);
         final var port = port("8082");
 

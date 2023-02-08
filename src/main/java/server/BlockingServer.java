@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import server.parser.Operation;
-import server.parser.OperationParser;
+import server.operation.Operation;
+import server.operation.OperationParser;
 import server.secrets.Secret;
-import server.service.CalculatorService;
+import server.service.OperationService;
 
 import static contract.GlobalConstants.KO;
 
@@ -15,12 +15,12 @@ public class BlockingServer {
 
     private final Secret secret;
     private final OperationParser operationParser;
-    private final CalculatorService calculator;
+    private final OperationService calculator;
 
     public BlockingServer(
             final Secret secret,
             final OperationParser operationParser,
-            final CalculatorService calculator
+            final OperationService calculator
     ) {
         this.secret = secret;
         this.operationParser = operationParser;
@@ -83,7 +83,7 @@ public class BlockingServer {
             final var sendPacket = new DatagramPacket(secretWithResult.asBytes(), secretWithResult.asBytes().length, clientAddress, dp.getPort());
             serverSocket.send(sendPacket);
             System.out.printf("Respuesta enviada a %s %s -> %s %n", clientAddress, rq, secretWithResult);
-        } catch (CalculatorService.CalculatorInputException e) {
+        } catch (OperationService.CalculatorInputException e) {
             answerKO(serverSocket, dp, clientAddress);
         } catch (IOException e) {
             throw new AnswerException(e, dp.getAddress());

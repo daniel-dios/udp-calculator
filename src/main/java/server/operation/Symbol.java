@@ -1,4 +1,4 @@
-package server;
+package server.operation;
 
 import contract.GlobalConstants;
 
