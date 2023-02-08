@@ -13,7 +13,7 @@ import java.time.Duration;
 import static client.response.ServerResponse.ko;
 import static client.response.ServerResponse.ok;
 import static client.response.ServerResponse.timeout;
-import static contract.GlobalConstants.isKO;
+import static client.contract.GlobalConstants.isKO;
 
 public class Client {
 

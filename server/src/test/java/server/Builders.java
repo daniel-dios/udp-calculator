@@ -1,8 +1,8 @@
 package server;
 
 import server.operation.Number;
-import server.secrets.Secret;
 import server.operation.resolver.OperationResult;
+import server.secrets.Secret;
 
 public class Builders {
 

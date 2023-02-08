@@ -1,7 +1,6 @@
 package server.operation;
 
 import org.junit.jupiter.api.Test;
-import server.operation.Number;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
