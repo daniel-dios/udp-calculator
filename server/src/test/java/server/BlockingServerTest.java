@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.internal.verification.Times;
 import server.operation.Operation;
 import server.operation.OperationParser;
-import server.secrets.Secret;
 import server.operation.resolver.OperationResolver;
+import server.secrets.Secret;
 
-import static contract.GlobalConstants.KO;
 import static java.lang.Thread.sleep;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -26,6 +25,7 @@ import static org.mockito.Mockito.when;
 import static server.Builders.number;
 import static server.Builders.port;
 import static server.Builders.result;
+import static server.contract.GlobalConstants.KO;
 import static server.operation.Symbol.DIV;
 import static server.operation.Symbol.MUL;
 

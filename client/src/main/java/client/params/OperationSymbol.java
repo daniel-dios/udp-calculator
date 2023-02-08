@@ -1,6 +1,6 @@
 package client.params;
 
-import contract.GlobalConstants;
+import client.contract.GlobalConstants;
 import java.util.Optional;
 
 enum OperationSymbol {

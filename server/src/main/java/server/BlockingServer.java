@@ -6,10 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import server.operation.Operation;
 import server.operation.OperationParser;
-import server.secrets.Secret;
 import server.operation.resolver.OperationResolver;
+import server.secrets.Secret;
 
-import static contract.GlobalConstants.KO;
+import static server.contract.GlobalConstants.KO;
 
 public class BlockingServer {
 

@@ -1,4 +1,4 @@
-package contract;
+package server.contract;
 
 public class GlobalConstants {
 

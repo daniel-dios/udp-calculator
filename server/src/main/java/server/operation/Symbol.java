@@ -1,6 +1,7 @@
 package server.operation;
 
-import contract.GlobalConstants;
+
+import server.contract.GlobalConstants;
 
 public enum Symbol {
     SUM(GlobalConstants.SUM, "\\" + GlobalConstants.SUM),

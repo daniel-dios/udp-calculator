@@ -1,2 +1,4 @@
 rootProject.name = 'upd-calculator'
+include 'server'
+include 'client'
 
