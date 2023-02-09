@@ -9,9 +9,9 @@ public class OperationResolver {
 
     public OperationResult compute(final Symbol symbol, final Number first, final Number second) throws CalculatorInputException {
         switch (symbol) {
-            case SUM:
+            case ADD:
                 return first.add(second);
-            case SUBS:
+            case SUB:
                 return first.minus(second);
             case MUL:
                 return first.mul(second);

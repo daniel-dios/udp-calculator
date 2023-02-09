@@ -2,8 +2,8 @@ package client.contract;
 
 public class GlobalConstants {
 
-    public static final String SUM = "+";
-    public static final String SUBS = "-";
+    public static final String ADD = "+";
+    public static final String SUB = "-";
     public static final String MUL = "x";
     public static final String DIV = ":";
     public static final String KO = "KO";

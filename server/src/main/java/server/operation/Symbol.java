@@ -4,8 +4,8 @@ package server.operation;
 import server.contract.GlobalConstants;
 
 public enum Symbol {
-    SUM(GlobalConstants.SUM, "\\" + GlobalConstants.SUM),
-    SUBS(GlobalConstants.SUBS, "\\" + GlobalConstants.SUBS),
+    ADD(GlobalConstants.ADD, "\\" + GlobalConstants.ADD),
+    SUB(GlobalConstants.SUB, "\\" + GlobalConstants.SUB),
     MUL(GlobalConstants.MUL, GlobalConstants.MUL),
     DIV(GlobalConstants.DIV, "\\" + GlobalConstants.DIV);
 

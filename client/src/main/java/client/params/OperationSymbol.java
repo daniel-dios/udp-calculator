@@ -4,8 +4,8 @@ import client.contract.GlobalConstants;
 import java.util.Optional;
 
 enum OperationSymbol {
-    SUM(GlobalConstants.SUM, "\\" + GlobalConstants.SUM),
-    SUBS(GlobalConstants.SUBS, "\\" + GlobalConstants.SUBS),
+    ADD(GlobalConstants.ADD, "\\" + GlobalConstants.ADD),
+    SUB(GlobalConstants.SUB, "\\" + GlobalConstants.SUB),
     MUL(GlobalConstants.MUL, GlobalConstants.MUL),
     DIV(GlobalConstants.DIV, "\\" + GlobalConstants.DIV);
 
@@ -25,9 +25,9 @@ enum OperationSymbol {
     static Optional<OperationSymbol> parse(final String arg) {
         switch (arg) {
             case "+":
-                return Optional.of(SUM);
+                return Optional.of(ADD);
             case "-":
-                return Optional.of(SUBS);
+                return Optional.of(SUB);
             case "x":
             case "X":
             case "*":

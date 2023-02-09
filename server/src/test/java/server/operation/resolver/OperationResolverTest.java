@@ -14,8 +14,8 @@ import static server.Builders.number;
 import static server.Builders.result;
 import static server.operation.Symbol.DIV;
 import static server.operation.Symbol.MUL;
-import static server.operation.Symbol.SUBS;
-import static server.operation.Symbol.SUM;
+import static server.operation.Symbol.SUB;
+import static server.operation.Symbol.ADD;
 
 public class OperationResolverTest {
 
@@ -41,12 +41,12 @@ public class OperationResolverTest {
             final Number second,
             final OperationResult expected
     ) throws OperationResolver.CalculatorInputException {
-        final var actual = new OperationResolver().compute(SUM, first, second);
+        final var actual = new OperationResolver().compute(ADD, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }
 
-    public static Stream<Arguments> getSubsOperations() {
+    public static Stream<Arguments> getSubOperations() {
         return Stream.of(
                 of(number("1"), number("2"), result(1 - 2)),
                 of(number("255"), number("0"), result(255)),
@@ -62,13 +62,13 @@ public class OperationResolverTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getSubsOperations")
-    void shouldSubs(
+    @MethodSource("getSubOperations")
+    void shouldSub(
             final Number first,
             final Number second,
             final OperationResult expected
     ) throws OperationResolver.CalculatorInputException {
-        final var actual = new OperationResolver().compute(SUBS, first, second);
+        final var actual = new OperationResolver().compute(SUB, first, second);
 
         assertThat(actual).isEqualTo(expected);
     }

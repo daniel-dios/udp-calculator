@@ -7,7 +7,7 @@ There is no any nice way provided by the uni to test this. So I decided to creat
 
 ## udpser
 
-A server UDP that answers requests from a given port. Requests are simple operations: sum, subs, mult and div.
+A server UDP that answers requests from a given port. Requests are simple operations: sum, sub, mult and div.
 Numbers are always from 0,255 and after the operation the server will sum a given secret, then, it will reply to the client with the result.
 
 ## udpcli

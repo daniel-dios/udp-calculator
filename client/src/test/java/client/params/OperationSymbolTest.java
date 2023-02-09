@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static client.params.OperationSymbol.DIV;
 import static client.params.OperationSymbol.MUL;
-import static client.params.OperationSymbol.SUBS;
-import static client.params.OperationSymbol.SUM;
+import static client.params.OperationSymbol.SUB;
+import static client.params.OperationSymbol.ADD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperationSymbolTest {
@@ -20,11 +20,11 @@ public class OperationSymbolTest {
         assertThat(OperationSymbol.parse("+"))
                 .isNotEmpty()
                 .get()
-                .isEqualTo(SUM);
+                .isEqualTo(ADD);
         assertThat(OperationSymbol.parse("-"))
                 .isNotEmpty()
                 .get()
-                .isEqualTo(SUBS);
+                .isEqualTo(SUB);
         assertThat(OperationSymbol.parse("x"))
                 .isNotEmpty()
                 .get()

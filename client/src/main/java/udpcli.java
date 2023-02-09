@@ -40,16 +40,16 @@ public class udpcli {
     // TODO find a nice way
     private static void printInstructions() {
         System.out.println();
-        System.out.println("El formato correcto es: ");
-        System.out.println("udpcli <ip_address_servidor> <port_servidor> <operacion>");
-        System.out.println("\t<ip_adress_servidor> debe ser la IP del servidor UDP.");
-        System.out.println("\t<port_servidor> debe ser el puerto del servidor UDP.");
-        System.out.println("\t<operacion> debe ser en formaco NsN");
-        System.out.println("\t\tsiendo N un numero entero del rango [0,255] (no vale division entre 0)");
-        System.out.println("\t\tsiendo s el simbolo de la operacion que queremos enviar");
-        System.out.println("\t\tsuma('+'), resta('-'), multiplicacion('x'), division(':')");
+        System.out.println("Correct format is: ");
+        System.out.println("udpcli <server_ip_address> <server_port> <operation>");
+        System.out.println("\t<server_ip_address> must be the UDP server IP.");
+        System.out.println("\t<server_port> must be the UDP port.");
+        System.out.println("\t<operation> must be the operation you want to send in format NsN:");
+        System.out.println("\t\tN must be a number (integer) of the [0,255].");
+        System.out.println("\t\ts it's the operation symbol");
+        System.out.println("\t\taddition('+'), subtraction('-'), multiplication('x'), division(':')");
         System.out.println();
-        System.out.println("Ejemplo/s:");
+        System.out.println("Example/s:");
         System.out.println("udpcli 127.0.0.1 8081 1x2");
         System.out.println("java udpcli 127.0.0.1 8081 1x2");
     }
