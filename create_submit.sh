@@ -1,12 +1,11 @@
-cp -r client/src/main/java/ entrega-tmp
-cp -r server/src/main/java/ entrega-tmp
-
-folder=""
 if [ $# -eq 0 ]; then
-  folder="entrega.zip"
+  folder="entrega"
 else
-  folder="$1.zip"
+  folder=$1
 fi
 
-zip -r "$folder" entrega-tmp
-rm -r entrega-tmp
+cp -r client/src/main/java/ "$folder"
+cp -r server/src/main/java/ "$folder"
+
+zip -r "$folder.zip" "$folder"
+rm -r "$folder"
