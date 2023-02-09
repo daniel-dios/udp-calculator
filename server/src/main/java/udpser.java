@@ -20,10 +20,12 @@ public class udpser {
 
     private static void printInstructions() {
         System.out.println();
-        System.out.println("Correct format is:: ");
+        System.out.println("Correct format is:");
         System.out.println("udpser <server_port> <secreto>");
+        System.out.println();
         System.out.println("\t<server_port> must be an unused UDP port.");
         System.out.println("\t<secret> must be a number (integer) of the range [0, 255].");
+        System.out.println();
         System.out.println("Example:");
         System.out.println("udpser 8081 3");
         System.out.println("java udpser 8081 3");

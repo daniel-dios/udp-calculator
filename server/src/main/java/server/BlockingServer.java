@@ -62,7 +62,7 @@ public class BlockingServer {
 
     private void answerKO(final DatagramSocket serverSocket, final DatagramPacket dp, final InetAddress clientAddress) {
         try {
-            System.out.printf("La operacion recibida de %s no es valida %s, respondiendo con un KO.. %n", clientAddress, new String(dp.getData()));
+            System.out.printf("Received operation %s is not valid %s, answering with KO.. %n", clientAddress, new String(dp.getData()));
             serverSocket.send(new DatagramPacket(KO.getBytes(), KO.getBytes().length, clientAddress, dp.getPort()));
         } catch (IOException e) {
             throw new AnswerException(e, dp.getAddress());
@@ -75,14 +75,14 @@ public class BlockingServer {
             final InetAddress clientAddress,
             final Operation rq
     ) {
-        System.out.printf("La operacion recibida de %s es %s %n", clientAddress, rq);
+        System.out.printf("Received operation from %s is %s %n", clientAddress, rq);
         try {
             final var result = calculator.compute(rq.operation(), rq.first(), rq.second());
             final var secretWithResult = secret.applyTo(result);
-            System.out.printf("Enviando respuesta a %s %s -> val calculado %s + secreto %s, total: %s %n", clientAddress, rq, result, secret, secretWithResult);
+            System.out.printf("Replying to %s %s -> calculated value %s + secret %s, total: %s %n", clientAddress, rq, result, secret, secretWithResult);
             final var sendPacket = new DatagramPacket(secretWithResult.asBytes(), secretWithResult.asBytes().length, clientAddress, dp.getPort());
             serverSocket.send(sendPacket);
-            System.out.printf("Respuesta enviada a %s %s -> %s %n", clientAddress, rq, secretWithResult);
+            System.out.printf("Replied %s %s -> %s %n", clientAddress, rq, secretWithResult);
         } catch (OperationResolver.CalculatorInputException e) {
             answerKO(serverSocket, dp, clientAddress);
         } catch (IOException e) {
